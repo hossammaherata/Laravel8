@@ -91,7 +91,7 @@
                                             </td>
                                             <td>
                                                 <span
-                                                    style="font-size: 17px">   {{ $item->created_at->format('d.m.Y') }}</span>
+                                                    style="font-size: 17px">   {{ $item->created_at->format('Y.m.d') }}</span>
                                             </td>
 
                                             <td>

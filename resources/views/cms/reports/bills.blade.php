@@ -37,10 +37,12 @@
 
     <h2>DiMax</h2>
     @if ($data=='yes')
-<p  align="right" >كشف الفواتير من تاريخ <strong>{{$from}}</strong> حتى تاريخ <strong>{{$to}}</strong></p>
-
+<p  align="right" >كشف الفواتير من تاريخ <strong>{{$from}}</strong> حتى تاريخ <strong>{{$to}}</strong>@if($name) للمسوق<strong>{{$name}}</strong>@endif</p>
+@if($name)
+<p  align="right" >للمسوق <strong>{{$name}}</strong></p>
+@endif
     @else
-    <p style="text"> <strong>كشف الفواتير</strong>  </p>
+    <p style="text"> <strong> الفواتير</strong>  </p>
     @endif
     @foreach ($bills as $item)
 

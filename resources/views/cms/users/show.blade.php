@@ -265,11 +265,11 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">كشف دفعات</h4>
+                <h4 class="modal-title">كشف فواتير</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('paid.user') }}" method="POST">
+                <form action="{{ route('user.bill.index') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputEmail1" style="font-size: 20px">من</label>

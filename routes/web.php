@@ -58,7 +58,10 @@ Route::get('create2/{id}',[OrderController::class,'create2'])->name('order.get.c
 Route::post('serach/bill',[SearchController::class,'Bills'])->name('bill.search');
 Route::get('report/index/all',[PrintController::class,'indexbill'])->name('report.bill.index');
 Route::post('/report/data/bill',[PrintController::class,'databill'])->name('data.bill');
+Route::post('/report/data/bill/user',[PrintController::class,'databilluser'])->name('data.user.bill');
+
 Route::post('view/bills',[PrintController::class,'billindex'] )->name('view.bill.index');
+Route::post('view/user/bills',[PrintController::class,'UserBillIndex'] )->name('user.bill.index');
 Route::post('/paid/users/get',[PaidController::class,'PrintUsersPaid'])->name('paid.users');
 Route::post('/paid/user/paid',[PaidController::class,'userPaid'])->name('paid.user');
 

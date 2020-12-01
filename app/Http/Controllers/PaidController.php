@@ -85,6 +85,7 @@ class PaidController extends Controller
         $object = $this->PrintUsersPaid($request);
         $from = Carbon::create($object->from);
         $to = Carbon::create($object->to);
+
         return view('cms.reports.paidusers', ['users' => $object->users, 'to' => $to, 'from' => $from]);
     }
 
@@ -118,9 +119,9 @@ class PaidController extends Controller
 
         $paid = new Paid();
         $paid->value = $request->get('value');
-        $paid->to = $request->get('to');
+       $paid->from = Carbon::create($request->from);
+        $paid->to  = Carbon::create($request->to);
         $paid->note = $request->note;
-        $paid->from = $request->get('from');
 
         $save = $paid->save();
         if ($save) {
@@ -174,9 +175,9 @@ class PaidController extends Controller
 
         $paid =  Paid::find($id);
         $paid->value = $request->get('value');
-        $paid->to = $request->get('to');
+        $paid->to =Carbon::create($request->to);
         $paid->note = $request->note;
-        $paid->from = $request->get('from');
+        $paid->from = Carbon::create($request->from);
 
         $save = $paid->save();
         if ($save) {
