@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-
+            <p>من تاريخ <strong>{{$from}}</strong>إلى تاريخ <strong>{{$to}}</strong></p>
             <div class="row clearfix" id="users">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">

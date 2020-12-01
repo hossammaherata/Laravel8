@@ -46,7 +46,7 @@ class PaidController extends Controller
 
 
 
-        return view('cms.paids.users', ['users' => $users, 'from' => $froms, 'to' => $tos]);
+        return view('cms.paids.users', ['users' => $users, 'from' => $from, 'to' => $to]);
     }
 
     public function userPaid(Request $request)
@@ -67,12 +67,12 @@ class PaidController extends Controller
         $users = User::with(['bills' => function ($query) use ($from, $to) {
 
             $query->where('created_at', '>=', $from)->where('created_at', '<=', $to)->withTrashed()->with('orders');
-        }])->withTrashed()->withCount('bills')->where('id',5)->get();
+        }])->withTrashed()->withCount('bills')->where('id',$request->user_id)->get();
 
 
 
 
-        return view('cms.paids.users', ['users' => $users, 'from' => $froms, 'to' => $tos]);
+        return view('cms.paids.users', ['users' => $users, 'from' => $from, 'to' => $to]);
     }
 
     public function reprotspaidusers(Request $request)

@@ -37,7 +37,7 @@
                             </div>
                             <div>
                                 <a href="#"  data-toggle="modal" data-target="#userpaid" class="btn btn-primary btn-sm">كشف الدفعات</a>
-                                <a class="btn btn-success btn-sm">كشف الفواتير</a>
+                                <a href="#" data-toggle="modal" data-target="#userBill" class="btn btn-success btn-sm">كشف الفواتير</a>
                             <a href="{{route('user.edit',[$user->token])}}" class="btn btn-danger btn-sm">تعديل</a>
 
 
@@ -244,6 +244,52 @@
                             </div>
                         </div>
                     </div>
+                <input type="hidden" value="{{$user->id}}" name="user_id">
+
+                    <div class="modal-footer">
+                        <button type="submit" id="add" class=" btn btn-primary">ذهاب</button>
+                        <button type="button" class="btn btn-danger " data-dismiss="modal">إغلاق</button>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+ <div id="userBill" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">كشف دفعات</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('paid.user') }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" style="font-size: 20px">من</label>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="input-group">
+                                <input name="from" type="text" data-provide="datepicker" data-date-autoclose="true"
+                                    class="form-control" placeholder="Select Date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1" style="font-size: 20px">إلى</label>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="input-group">
+                                <input name="to" type="text" data-provide="datepicker" data-date-autoclose="true"
+                                    class="form-control" placeholder="Select Date">
+                            </div>
+                        </div>
+                    </div>
+                <input type="hidden" value="{{$user->id}}" name="user_id">
 
                     <div class="modal-footer">
                         <button type="submit" id="add" class=" btn btn-primary">ذهاب</button>
