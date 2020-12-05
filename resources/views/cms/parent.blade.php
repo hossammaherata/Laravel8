@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="en">
 
 <head>
@@ -888,30 +889,42 @@
                                 <li><a href="#" data-toggle="modal" data-target="#addpaids">إضافة دفعة</a></li>
                             </ul>
                         </li>
-                         <li>
-                            <a href="#myPage" class="has-arrow"><i class="icon-social-twitter"></i><span>القنوات</span></a>
+                        <li>
+                            <a href="#myPage" class="has-arrow"><i
+                                    class="icon-social-twitter"></i><span>القنوات</span></a>
                             <ul>
-                            <li class="active"><a  href="{{route('twit.index')}}">جميع القنوات
-                                        </a></li>
+                                <li class="active"><a href="{{ route('twit.index') }}">جميع القنوات
+                                    </a></li>
                                 <li><a href="{{ route('twit.create') }}"> قناة جديدة</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#myPage" class="has-arrow"><i class="icon-map"></i><span>التجار</span></a>
                             <ul>
-                            <li class="active"><a  href="{{route('deal.index')}}">جميع التجار
-                                        </a></li>
+                                <li class="active"><a href="{{ route('deal.index') }}">جميع التجار
+                                    </a></li>
                                 <li><a href="{{ route('deal.create') }}"> تاجر جديد</a></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="#" data-toggle="modal" data-target="#profitdeal" class="has-arrow"><i class="fa fa-dollar"></i><span>الأرباح</span></a>
+                            <a href="#myPage" class="has-arrow"><i class="icon-star"></i><span>المسابقات</span></a>
+                            <ul>
+                                <li class="active"><a href="{{ route('event.index') }}">جميع المسابقات
+                                    </a></li>
+                                <li><a data-toggle="modal" data-target=".new-project-modal" href="#">مسابقة جديدة</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#profitdeal" class="has-arrow"><i
+                                    class="fa fa-dollar"></i><span>الأرباح</span></a>
 
                         </li>
                         <li class="header">___</li>
 
 
-                        <li><a href="{{route('truch.index')}}"><i class=" fa fa-trash"></i><span>المحذوفات</span></a></li>
+                        <li><a href="{{ route('truch.index') }}"><i class=" fa fa-trash"></i><span>المحذوفات</span></a>
+                        </li>
                         <li class="header">UI Elements</li>
 
                         <li><a href="map-jvectormap.html"><i class="icon-map"></i><span>jVector Map</span></a></li>
@@ -924,6 +937,54 @@
                 </nav>
             </div>
         </div>
+        <!-- Setup New Project -->
+        <div class="modal fade new-project-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form action="{{ route('event.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">مسابقة جديدة</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="desc" placeholder="وصف المسابقة">
+                            </div>
+                            <input type="file" name="image" class="dropify">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1" style="font-size: 20px">تاريخ الإنتهاء</label>
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="input-group">
+                                        <input name="end" type="text" data-provide="datepicker"
+                                            data-date-autoclose="true" class="form-control" placeholder="Select Date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: 20px">الحالة </label>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" name="status" id="status"
+                                        @if (old('status') == 'on')
+                                    checked @endif>
+                                    <label class="custom-control-label" style="font-size: 20px"
+                                        for="status">مُفعل</label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-round btn-default" data-dismiss="modal">إغلاق</button>
+                            <button type="submit" class="btn btn-round btn-success">إنشاء</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {{-- //////////////// --}}
 
         @yield('content')
 
@@ -945,6 +1006,8 @@
     <script src="{{ asset('cms/html/assets/bundles/c3.bundle.js') }}"></script>
     <script src="{{ asset('cms/assets/vendor/dropify/js/dropify.min.js') }}"></script>
     <script src="{{ asset('cms/assets/js/dropify/js/dropify.min.js') }}"></script>
+    <script src="{{ asset('cms/html/assets/js/pages/forms/dropify.js') }}"></script>
+
 
     <script src="{{ asset('cms/html/assets/js/jquery.printPage.js') }}"></script>
 
@@ -1016,8 +1079,8 @@
                         </div>
                         <div class="form-group" id="dd">
                             <label style="font-size: 20px">المبلغ</label>
-                            <input type="number" class="form-control"
-                                style="font-size: 20px" name="value" placeholder=" ادخل  المبلغ ">
+                            <input type="number" class="form-control" style="font-size: 20px" name="value"
+                                placeholder=" ادخل  المبلغ ">
                         </div>
 
                         <div class="form-group" id="dd">

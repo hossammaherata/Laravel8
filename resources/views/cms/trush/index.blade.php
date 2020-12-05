@@ -1,3 +1,4 @@
+
 @extends('cms.parent')
 @section('title', ' | الفواتير')
 @section('style')
@@ -55,7 +56,9 @@
                     </div>
                 </div>
             </div>
+            {{-- @Html.partial() --}}
 
+             @if($bills->count() > 0)
             <div class="row clearfix" id="bills">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
@@ -125,7 +128,9 @@
                 </div>
 
             </div>
+            @endif
 
+             @if($users->count() > 0)
             <div class="row clearfix" id="bills">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
@@ -187,6 +192,65 @@
                 </div>
 
             </div>
+            @endif
+
+            @if($events->count() > 0)
+            <div class="row clearfix" >
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+
+                        <div class="table-responsive">
+                            <table class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th style="font-size: 17px">الصورة</th>
+                                        <th style="font-size: 17px">وصف المسابقة</th>
+                                        <th style="font-size: 17px">الإعدادات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <span hidden>{{ $i = 0 }}</span>
+                                    @foreach ($events as $item)
+                                        <span hidden>{{ $i++ }}</span>
+
+                                        <tr>
+                                            <td>{{ $i }}</td>
+                                            <td class="w60">
+                                            <img src="{{url('images/events/'.$item->image)}}" data-toggle="tooltip" data-placement="top" title="{{$item->name}}" alt="{{$item->name}}" class="w35 h35 rounded">
+                                        </td>
+
+
+
+                                            <td>
+                                                <div class="font-15">{{ $item->desc }}</div>
+                                            </td>
+
+
+                                            <td>
+                                            <a onclick="confirmRestoreEvent(this, '{{ $item->id }}')" type="button"
+                                                    style="font-size: 20px" class="btn btn-sm btn-default js-sweetalert"
+                                                    title="حذف" data-type="confirm"><i class="fa fa-trash-o text-success">
+                                                        إستعادة </i></a>
+
+
+                                            </td>
+
+
+
+
+
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+             @endif
         </div>
     </div>
 
@@ -258,6 +322,23 @@
             })
         }
 
+           function confirmRestoreEvent(app, id) {
+            Swal.fire({
+                title: 'هل انت متأكد من إسترجاعها ؟',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3fe663',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'إسترجاع',
+                cancelButtonText: 'تراجع'
+            }).then((result) => {
+                if (result.value) {
+                    eventRestore(app, id)
+                }
+            })
+        }
+
 
 
         function deletecategory(app, id) {
@@ -283,6 +364,25 @@
 
         function restoreUser(app, id) {
             axios.delete('/cms/truch/restore/user/' + id)
+                .then(function(response) {
+                    // handle success (Status Code: 200)
+                    console.log(response);
+                    console.log(response.data);
+                    showMessage(response.data);
+                    app.closest('tr').remove();
+                })
+                .catch(function(error) {
+                    // handle error (Status Code: 400)
+                    console.log(error);
+                    console.log(error.response.data);
+                    showMessage(error.response.data);
+                })
+                .then(function() {
+                    // always executed
+                });
+        }
+         function eventRestore(app, id) {
+            axios.delete('/cms/truch/restore/event/' + id)
                 .then(function(response) {
                     // handle success (Status Code: 200)
                     console.log(response);

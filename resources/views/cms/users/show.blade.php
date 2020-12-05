@@ -6,12 +6,11 @@
             <div class="block-header">
                 <div class="row clearfix">
                     <div class="col-md-6 col-sm-12">
-                        <h2>User Profile</h2>
+                        <h2>الصفحة الشخصية</h2>
                         <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Oculux</a></li>
-                                <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+                         <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{route('admin.dashbord')}}" style="font-size: 20px">الرئيسية</a></li>
+                                <li class="breadcrumb-item " style="font-size: 20px" aria-current="page">مسوق</li>
                             </ol>
                         </nav>
                     </div>
@@ -26,13 +25,11 @@
                         <div class="profile-header d-flex justify-content-between justify-content-center">
                             <div class="d-flex">
                                 <div class="mr-3">
-                                    <img src="{{ asset('cms/assets/images/user.png') }}" class="rounded" alt="">
+                                   <img src="{{url('images/users/'.$user->image)}}" class="rounded" alt="">
                                 </div>
                                 <div class="details">
                                     <h5 class="mb-0">{{ $user->name }}</h5>
                                     <p class="mb-0"><span>الفواتير <strong>{{ $user->bills_count }}</strong></span>
-                                        <span>Followers: <strong>4,230</strong></span> <span>Following:
-                                            <strong>560</strong></span></p>
                                 </div>
                             </div>
                             <div>
@@ -50,164 +47,43 @@
                 <div class="col-xl-4 col-lg-4 col-md-5">
                     <div class="card">
                         <div class="header">
-                            <h2>Info</h2>
-                            <ul class="header-dropdown dropdown">
-                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
-                                        role="button" aria-haspopup="true" aria-expanded="false"></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="javascript:void(0);">Action</a></li>
-                                        <li><a href="javascript:void(0);">Another Action</a></li>
-                                        <li><a href="javascript:void(0);">Something else</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+
                         </div>
                         <div class="body">
-                            <small class="text-muted">Address: </small>
-                            <p>795 Folsom Ave, Suite 600 San Francisco, 94107</p>
+                            <small class="text-muted">العنوان: </small>
+                            <p>{{$user->address}}</p>
 
                             <hr>
-                            <small class="text-muted">Email address: </small>
-                            <p>louispierce@example.com</p>
+                            <small class="text-muted">الإيميل : </small>
+                            <p>{{$user->email}}</p>
                             <hr>
-                            <small class="text-muted">Mobile: </small>
-                            <p>+ 202-222-2121</p>
+                            <small class="text-muted">ألهاتف: </small>
+                        <p>{{$user->mobile}}</p>
                             <hr>
-                            <small class="text-muted">Birth Date: </small>
-                            <p class="m-b-0">October 17th, 93</p>
+                            <small class="text-muted">رقم الهوية: </small>
+                        <p class="m-b-0">{{$user->idint}}</p>
                             <hr>
-                            <small class="text-muted">Social: </small>
-                            <p><i class="fa fa-twitter m-r-5"></i> twitter.com/example</p>
-                            <p><i class="fa fa-facebook  m-r-5"></i> facebook.com/example</p>
-                            <p><i class="fa fa-github m-r-5"></i> github.com/example</p>
-                            <p><i class="fa fa-instagram m-r-5"></i> instagram.com/example</p>
+
                         </div>
                     </div>
                 </div>
 
                 <div class="col-xl-8 col-lg-8 col-md-7">
+
                     <div class="card">
-                        <div class="header">
-                            <h2>Basic Information</h2>
-                            <ul class="header-dropdown dropdown">
-                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
-                                        role="button" aria-haspopup="true" aria-expanded="false"></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="javascript:void(0);">Action</a></li>
-                                        <li><a href="javascript:void(0);">Another Action</a></li>
-                                        <li><a href="javascript:void(0);">Something else</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
+
                         <div class="body">
                             <div class="row clearfix">
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="First Name">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Last Name">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-12">
-                                    <div class="form-group">
-                                        <select class="form-control">
-                                            <option value="">-- Select Gander --</option>
-                                            <option value="AF">Male</option>
-                                            <option value="AX">Female</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-12">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="icon-calendar"></i></span>
-                                            </div>
-                                            <input data-provide="datepicker" data-date-autoclose="true" class="form-control"
-                                                placeholder="Birthdate">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-12">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="icon-globe"></i></span>
-                                            </div>
-                                            <input type="text" class="form-control" placeholder="http://">
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="col-lg-4 col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="State/Province">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="City">
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-md-12">
-                                    <div class="form-group">
-                                        <textarea rows="4" type="text" class="form-control"
-                                            placeholder="Address"></textarea>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <button type="button" class="btn btn-round btn-primary">Update</button> &nbsp;&nbsp;
-                            <button type="button" class="btn btn-round btn-default">Cancel</button>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="header">
-                            <h2>Account Data</h2>
-                        </div>
-                        <div class="body">
-                            <div class="row clearfix">
-                                <div class="col-lg-4 col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" value="louispierce" disabled
-                                            placeholder="Username">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-12">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" value="louis.info@yourdomain.com"
-                                            placeholder="Email">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Phone Number">
-                                    </div>
-                                </div>
                                 <div class="col-lg-12 col-md-12">
                                     <hr>
-                                    <h6>Change Password</h6>
+                                    <h6>كلمة السر</h6>
                                     <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Current Password">
+                                    <input type="text" disabled class="form-control" value="{{$user->viewPassword}}">
                                     </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="New Password">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Confirm New Password">
-                                    </div>
+
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-round btn-primary">Update</button> &nbsp;&nbsp;
-                            <button type="button" class="btn btn-round btn-default">Cancel</button>
                         </div>
                     </div>
                 </div>

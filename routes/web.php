@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\DashBordController;
 use App\Http\Controllers\SearchController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\PrintController;
 use App\Http\Controllers\TwitController;
 
 use App\Http\Controllers\DealerController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfitAdminController;
 use App\Http\Controllers\TruchController;
@@ -34,9 +36,14 @@ Route::get('/', function () {
 });
 
 Route::resource('twit',TwitController::class);
-
+// Route::resource('admin', AdminController::class);
+//////////////////////////////////////
+///////////////Admin////////////////
 
 Route::prefix('cms/')->group(function () {
+Route::resource('admin', AdminController::class);
+
+
 Route::post('user/serach',[SearchController::class,'SearchUser'])->name('user.search');
 Route::post('user/serach/bill',[SearchController::class,'BillUsers'])->name('bill.user.search');
 Route::post('dealer/search/',[SearchController::class,'dealsearch']);
@@ -73,8 +80,19 @@ Route::post('/print/paids/users',[PaidController::class,'reprotspaidusers'])->na
 Route::get('/trush',[TruchController::class,'index'])->name('truch.index');
 Route::delete('/truch/restore/{id}',[TruchController::class,'restore'])->name('truch.restore');
 Route::delete('/truch/restore/user/{id}',[TruchController::class,'userRestore'])->name('user.restore');
+Route::delete('/truch/restore/event/{id}',[TruchController::class,'eventRestore'])->name('event.restore');
+
 
 Route::post('/profit/admin/',[ProfitAdminController::class,'adminProfit'])->name('admin.profit');
+
+////////////////////////////////
+Route::post('/event/store',[EventController::class,'store'])->name('event.store');
+Route::get('/event',[EventController::class,'index'])->name('event.index');
+Route::put('/event/update/{id}',[EventController::class,'update'])->name('event.update');
+Route::get('/event/{id}/edit',[EventController::class,'edit'])->name('event.edit');
+
+Route::delete('/event/delete/{id}',[EventController::class,'delete'])->name('event.delete');
+
 });
 Route::get('hh/',[OrderController::class,'hh'])->name('dd.build');
 

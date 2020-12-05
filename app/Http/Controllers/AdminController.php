@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -14,7 +15,13 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $admin=new Admin();
+        $admin->name="hossam";
+        $admin->image="efef";
+        $admin->password=Hash::make("Pass123$");
+        $admin->email='hm@12';
+        $admin->save();
+        dd(12345);
     }
 
     /**
@@ -36,6 +43,7 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         //
+
     }
 
     /**
