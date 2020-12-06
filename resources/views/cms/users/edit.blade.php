@@ -110,18 +110,28 @@
                                             </div>
                                         </div>
 
-
-                                        <div class="form-group">
-                                            <label style="font-size: 20px">حالة الحساب</label>
-                                            <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input" name="status"
-                                                    id="status" @if ($user->status == 'Active')
-                                                checked @endif>
-                                                <label class="custom-control-label" style="font-size: 20px"
-                                                    for="status">مُفعل</label>
-
-                                            </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">حالة المسوق</label>
+                                        <div class="custom-control custom-radio">
+                                            <input onclick="myFunction()"  class="custom-control-input" type="radio" id="Wait"
+                                                   name="status" value="Wait"
+                                                   @if($user->status == 'Wait') checked  @endif>
+                                            <label for="Wait" class="custom-control-label">قيد الإنتظار</label>
                                         </div>
+                                        <div class="custom-control custom-radio">
+                                            <input onclick="myFunction()"  class="custom-control-input" type="radio" id="Active"
+                                                   name="status" value="Active"
+                                                   @if($user->status == 'Active') checked @endif>
+                                            <label for="Active" class="custom-control-label">فعّال</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input onclick="myFunction()"  class="custom-control-input" type="radio" id="Blocked"
+                                                   name="status" value="Blocked"
+                                                   @if($user->status == 'Blocked') checked   @endif>
+                                            <label for="Blocked" class="custom-control-label">حظر</label>
+                                        </div>
+
+                                    </div>
 
                                     </div>
                                 </div>

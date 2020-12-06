@@ -1,4 +1,4 @@
-    <div class="row clearfix" id="users">
+ <div class="row clearfix" id="users">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
 
@@ -10,8 +10,11 @@
                                         <th style="font-size: 17px">الإسم</th>
                                         <th style="font-size: 17px"> رقم الهوية</th>
                                         <th style="font-size: 17px">الهاتف</th>
+
                                         <th style="font-size: 17px">المبلغ الحالي</th>
                                         <th style="font-size: 17px">عرض المستخدم</th>
+                                      <th style="font-size: 17px">الحالة</th>
+
                                         <th style="font-size: 17px">الإعدادات</th>
                                     </tr>
                                 </thead>
@@ -51,7 +54,7 @@
                                             {{-- <td><span style="font-size: 17px">{{ $user->profit }}</span></td> --}}
 
                                             <td>
-                                                <a class="btn btn-primary btn-sm" {{--
+                                            <a href="{{route('user.show',[$user->id])}}" class="btn btn-primary btn-sm" {{--
                                                     href="{{ route('user.details', [$user->id]) }}">
                                                     --}}
                                                     href="#">
@@ -64,14 +67,18 @@
                                                 </a>
                                                 <span class="badge badge-dark"></span>
                                             </td>
-                                            {{-- <td>
+                                            <td>
                                                 @if ($user->status == 'Active')
                                                     <span style="font-size: 17px" class="badge badge-success">نشط</span>
+
+                                                    @elseif($user->status=='Blocked')
+                                                    <span style="font-size: 17px" class="badge badge-danger">محظور</span>
                                                     @else
-                                                    <span style="font-size: 17px" class="badge badge-danger">متوقف</span>
+                                            <span style="font-size: 17px" class="badge badge-warning">تحت المتابعة</span>
+
                                                 @endif
 
-                                            </td> --}}
+                                            </td>
 
 
 
@@ -79,11 +86,11 @@
                                                 <a href="{{ route('user.edit', [$user->token]) }}" type="button"
                                                     style="font-size: 20px" class="btn btn-sm btn-default" title="تعديل"><i
                                                         class="fa fa-edit"></i> تعديل</a>
-                                                {{-- <a
+                                                <a
                                                     onclick="confirmDelete(this, '{{ $user->id }}')" type="button"
                                                     style="font-size: 20px" class="btn btn-sm btn-default js-sweetalert"
                                                     title="حذف" data-type="confirm"><i class="fa fa-trash-o text-danger">
-                                                        حذف </i></a> --}}
+                                                        حذف </i></a>
                                                 {{-- <button type="button"
                                                     class="btn btn-sm btn-default" title="عرض"><i
                                                         class="icon-diamond"></i></button> --}}

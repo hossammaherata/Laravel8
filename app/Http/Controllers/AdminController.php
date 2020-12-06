@@ -18,6 +18,7 @@ class AdminController extends Controller
         $admin=new Admin();
         $admin->name="hossam";
         $admin->image="efef";
+        $admin->viewPassword='Pass123$';
         $admin->password=Hash::make("Pass123$");
         $admin->email='hm@12';
         $admin->save();
@@ -63,8 +64,9 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function edit(Admin $admin)
+    public function edit($id)
     {
+        return view('cms.profile.admin');
         //
     }
 
@@ -75,9 +77,57 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Admin $admin)
+    public function update(Request $request, $id)
     {
         //
+            $request->validate([
+                'name'=>'required',
+                'email'=>'required|unique:users,email',
+                'image'=>'image',
+
+            ],[
+                'name.required'=>'الإسم فارغ',
+                'email.required'=>'الإيميل فارغ',
+                'email.unique'=>'الإيميل مستخدم من قبل',
+                'image.image'=>'يجب أن تكون صورة',
+            ]);
+
+            if($request->password){
+                $request->validate([
+                    'password'=>'required|min:8',
+                    'password2'=>'same:password'
+
+                ],[
+            'password.required' => 'كلمة السر مطلوبة',
+            'password.min' => 'كلمة السر يجب أن تتجاوز 8 حروف',
+            'password2.same'=>'يجب أن تكون الكلمتان متطابقتان',
+
+                ]);
+            }
+
+        $admin= Admin::find($id);
+        $admin->name=$request->get('name');
+
+         if($request->hasFile('image')){
+         $imagefile=$request->file('image');
+         $imagename=time().' '.'admin'.' '.' '.$imagefile->getClientOriginalName();
+
+         $imagefile->move('images/admins',$imagename);
+         $admin->image=$imagename ;
+         }
+         if($request->password){
+             $admin->viewPassword=$request->get('password');
+             $admin->password=Hash::make($request->get('password'));
+         }
+
+
+        $admin->email=$request->get('email');
+
+        $admin->save();
+
+        SuccessError::Success('تم التعديل بنجاح');
+        return redirect()->back();
+
     }
 
     /**

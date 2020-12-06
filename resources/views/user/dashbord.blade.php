@@ -1,4 +1,4 @@
-  @extends('cms.parent')
+  @extends('user.parent')
 @section('content')
 <div id="main-content">
         <div class="container-fluid">
@@ -137,7 +137,7 @@
                                     <th style="width: 110px;">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            {{-- <tbody>
                                 <span hidden>{{$i=0}}</span>
                                 @foreach ($users as $item)
                                     <span hidden>{{$i++}}</span>
@@ -169,7 +169,7 @@
                                 </tr>
                                 @endforeach
 
-                            </tbody>
+                            </tbody> --}}
                         </table>
                     </div>
                 </div>

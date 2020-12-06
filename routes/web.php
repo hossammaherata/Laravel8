@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\DashBordController;
 use App\Http\Controllers\SearchController;
@@ -15,6 +16,9 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfitAdminController;
 use App\Http\Controllers\TruchController;
+use App\Http\Controllers\ContactController;
+
+use App\Http\Controllers\UserAccessController;
 use App\Models\Paid;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -31,16 +35,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    return view('user.parent');
     // dd(User::find(1)->orders);
-    return view('cms.parent');
+    // return redirect()->route('user.index');
 });
 
 Route::resource('twit',TwitController::class);
 // Route::resource('admin', AdminController::class);
 //////////////////////////////////////
 ///////////////Admin////////////////
+// Route::resource('admin', AdminController::class);
 
-Route::prefix('cms/')->group(function () {
+Route::prefix('cms/')->middleware('auth:admin')->group(function () {
 Route::resource('admin', AdminController::class);
 
 
@@ -49,7 +55,7 @@ Route::post('user/serach/bill',[SearchController::class,'BillUsers'])->name('bil
 Route::post('dealer/search/',[SearchController::class,'dealsearch']);
 Route::get('/print',[PrintController::class,'index'])->name('print');
 Route::get('/deal/products/{id}/',[DealerController::class,'dealProducts'])->name('deal.proud');
-Route::get('admin/dashbord',[DashBordController::class,'admin'])->name('admin.dashbord');
+Route::get('dashbord',[DashBordController::class,'admin'])->name('admin.dashbord');
 Route::resource('user', UserController::class);
 Route::resource('paid', PaidController::class);
 Route::resource('deal', DealerController::class);
@@ -93,6 +99,41 @@ Route::get('/event/{id}/edit',[EventController::class,'edit'])->name('event.edit
 
 Route::delete('/event/delete/{id}',[EventController::class,'delete'])->name('event.delete');
 
+Route::resource('contact',ContactController::class);
+    Route::get('logout', [AdminAuthController::class,'logout'])->name('admin.logout');
+
+
 });
-Route::get('hh/',[OrderController::class,'hh'])->name('dd.build');
+
+
+/////////////////////////LOGIN ADMIN//////////////
+Route::prefix('cms/admin/')->namespace('Auth')->group(function () {
+
+    Route::get('page/login', [AdminAuthController::class,'showLoginView'])->name('admin.login.view');
+    Route::post('login',  [AdminAuthController::class,'login'])->name('admin.login.store');
+    Route::get('blocked', [AdminAuthController::class,'blocked'])->name('admin.blocked');
+
+    // Route::get('forgot-password', 'AdminAuthController@showForgetPassword')->name('cms.admin.forgot_password_view');
+    // Route::post('forgot-password', 'AdminAuthController@requestNewPassword')->name('cms.admin.forgot_password');
+});
+    Route::get('blo', [AdminAuthController::class,'blocked'])->name('admin.blocked');
+
+
+    //////////////////////////////////////
+///////////////Admin//////////////////////////
+//////////////////////////////////////////////
+///////////////  U S E  R /////////////////////////
+///////////////////////////////////////////
+///////////////Admin////////////////////
+
+
+Route::prefix('auth/')->group(function () {
+Route::post('/user/bills',[PrintController::class,'Authuserbill'])->name('auth.bills');
+Route::get('/',[DashBordController::class,'user'])->name('user.dashbord');
+Route::get('/Product',[UserAccessController::class,'twit'])->name('user.twit');
+Route::get('/contact',[UserAccessController::class,'contact'])->name('user.contact');
+
+});
+
+
 

@@ -32,7 +32,7 @@ class UserCreate extends FormRequest
             'address' => 'required|string|min:3',
             'password' => 'required|string|min:5',
             'password2'=>'same:password',
-            'status' => 'string|in:on',
+            'status' => 'string|in:Blocked,Active,Wait',
             'idint'=>'required|unique:users,idint|integer'
 
         ];

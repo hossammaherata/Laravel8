@@ -23,7 +23,7 @@ class UserController extends Controller
         //
 
         // dd($bill->orders->count());
-        $users=User::with('users')->get();
+        $users=User::all();
 
         return view('cms.users.index',['users'=>$users]);
     }
@@ -60,7 +60,7 @@ class UserController extends Controller
         $user->token=Str::uuid();
         $user->profit=0;
         $user->mobile=$request->get('mobile');
-        $user->status=$request->get('status')=='on'?'Active':'Wait';
+        $user->status=$request->get('status');
 
           if($request->hasFile('image')){
          $imagefile=$request->file('image');
@@ -122,8 +122,7 @@ class UserController extends Controller
 
 
         $user->mobile=$request->get('mobile');
-        $user->status=$request->get('status')=='on'?'Active':'Blocked';
-
+        $user->status=$request->get('status');
           if($request->hasFile('image')){
          $imagefile=$request->file('image');
          $imagename=time().' '.$string.' '.' '.$imagefile->getClientOriginalName();

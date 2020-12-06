@@ -10,7 +10,7 @@
                     <div class="col-md-6 col-sm-12">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#" style="font-size: 20px">الرئيسية</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('admin.dashbord')}}" style="font-size: 20px">الرئيسية</a></li>
                             <li class="breadcrumb-item " style="font-size: 20px" aria-current="page">القنوات</li>
                             </ol>
                         </nav>
@@ -52,7 +52,7 @@
 
 
                                     <td><span style="font-size: 17px">{{$twit->name}}</span></td>
-                                    <td><span style="font-size: 17px"><a href="{{$twit->href}}"></a>{{$twit->href}}</span></td>
+                                    <td><span style="font-size: 17px"><a href="{{$twit->href}}">{{$twit->href}}</a></span></td>
 
 
                                         <td>

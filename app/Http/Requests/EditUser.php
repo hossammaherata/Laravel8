@@ -29,7 +29,7 @@ class EditUser extends FormRequest
             'mobile' => 'required|numeric',
             'image' => 'image',
             'address' => 'required|string|min:3',
-            'status' => 'string|in:on',
+            'status' => 'string|in:Blocked,Active,Wait',
             'idint'=>'required|integer'
 
         ];

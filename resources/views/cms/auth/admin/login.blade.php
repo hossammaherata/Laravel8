@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Nine9 - Admin | Log in</title>
+  <title>DiMax - لوحة التحكم | </title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -21,12 +21,12 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="#"><b>Nine9</b> - Admin CMS</a>
+    <a href="#"><b>DiMax</b> - لوحة التحكم</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+      <p class="login-box-msg">تسجيل الدخول</p>
 
       @if ($errors->any())
         <div class="alert alert-danger" role="alert">
@@ -39,7 +39,7 @@
     @endif
 
 
-    <form  action="{{route('admin.post')}}" method="post">
+    <form  action="{{route('admin.login.store')}}" method="post">
         @csrf
         <div class="input-group mb-3">
           <input type="email" name="email" class="form-control" placeholder="Email" value="{{old('email')}}">
@@ -63,7 +63,7 @@
             <div class="icheck-primary">
               <input type="checkbox" id="remember" name="remember_me">
               <label for="remember">
-                Remember Me
+                 تذكرني
               </label>
             </div>
           </div>

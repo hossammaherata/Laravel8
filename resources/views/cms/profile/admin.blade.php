@@ -1,5 +1,5 @@
 @extends('cms.parent')
-@section('title', '  |  تعديل مسوق')
+
 
 @section('content')
     <div id="main-content">
@@ -7,12 +7,11 @@
             <div class="block-header">
                 <div class="row clearfix">
                     <div class="col-md-6 col-sm-12">
-                        <h1 style="font-size: 20px">تعديل  مسوق</h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{route('admin.dashbord')}}" style="font-size: 20px">الرئيسية</a></li>
                             <li class="breadcrumb-item"><a href="{{route('user.index')}}" style="font-size: 20px">المسوقين</a></li>
-                                <li class="breadcrumb-item active" aria-current="page" style="font-size: 20px"> تعديل مسوق
+                                <li class="breadcrumb-item active" aria-current="page" style="font-size: 20px">الصفحة الشخصية
                                 </li>
                             </ol>
                         </nav>
@@ -30,7 +29,7 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="body">
-                            <form method="POST" action="{{ route('user.store') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('admin.update',Auth::id()) }}" enctype="multipart/form-data">
 
 
                                 @if ($errors->any())
@@ -55,54 +54,41 @@
                                     </div>
                                 @endif
                                 @csrf
-
+                                @method("PUT")
                                 <div class="form-group row">
                                     <div class="col-md-10 col-sm-10">
 
                                         <div class="form-group" id="dd">
                                             <label style="font-size: 20px">الإسم</label>
-                                            <input type="text" class="form-control hosam" value="{{ old('name') }}"
-                                                style="font-size: 20px" name="name" placeholder=" ادخل الإسم رباعي ">
-                                            <div id="errorname" class="text-danger">{{ $errors->first('name') }}</div>
+                                            <input type="text" class="form-control" value="{{ Auth::user()->name}}"
+                                                style="font-size: 20px" name="name" placeholder="   الإسم ">
                                         </div>
 
-                                        <div class="form-group" id="dd">
-                                            <label style="font-size: 20px">رقم الهوية</label>
-                                            <input type="number" class="form-control hosam" value="{{ old('idint') }}"
-                                                style="font-size: 20px" name="idint" placeholder=" ادخل رقم الهوية ">
-                                            <div id="erroridint" class="text-danger">{{ $errors->first('idint') }}</div>
-                                        </div>
 
                                         <div class="form-group">
                                             <label style="font-size: 20px"> الإيميل</label>
-                                            <input type="email"  class="form-control hosam" value="{{old('email')  }}"
+                                            <input type="email"  class="form-control hosam" value="{{ Auth::user()->email }}"
                                                 style="font-size: 20px" name="email" placeholder="الإيميل الشخصي">
-                                            <div id="erroremail" class="text-danger">{{ $errors->first('email') }}</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label style="font-size: 20px">رقم الهاتف</label>
-                                            <input type="tel" class="form-control hosam " value="{{ old('mobile')}}"
-                                                style="font-size: 20px" name="mobile" placeholder="أدخل رقم الهاتف">
-                                            <div id="errormobile" class="text-danger">{{ $errors->first('mobile') }}</div>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label style="font-size: 20px">العنوان</label>
-                                            <input type="text" class="form-control hosam " value="{{ old('address') }}"
-                                                style="font-size: 20px" name="address" placeholder="ادخل العنوان">
-                                            <div id="erroraddress" class="text-danger">{{ $errors->first('address') }}</div>
-                                        </div>
+
+
 
                                         <div class="row clearfix">
                                             <div class="col-lg-12">
                                                 <label style="font-size: 20px">الصورة الشخصية</label>
                                                 <input type="file" width="590px" height="390px" class="dropify"
-                                                    name="image">
-                                                <div id="errorimage" class="text-danger">{{ $errors->first('image') }}</div>
+                                                  data-default-file="{{ url('images/admins/' . Auth::user()->image) }}"  name="image">
                                             </div>
 
                                         </div>
-
+                                        <div class="form-group">
+                                            <label style="font-size:  20px"> كلمة السر</label>
+                                            <input type="text" class="form-control hosam" style="font-size: 20px"
+                                        value="{{Auth::user()->viewPassword}}" disabled   name="text">
+                                            <div id="errorpassword" class="text-danger ">{{ $errors->first('password') }}
+                                            </div>
+                                        </div>
                                          <div class="form-group">
                                             <label style="font-size:  20px"> كلمة السر</label>
                                             <input type="password" class="form-control hosam" style="font-size: 20px"
@@ -120,28 +106,6 @@
 
 
 
-                       <div class="form-group">
-                                        <label for="exampleInputPassword1">حالة المسوق</label>
-                                        <div class="custom-control custom-radio">
-                                            <input onclick="myFunction()"  class="custom-control-input" type="radio" id="Wait"
-                                                   name="status" value="Wait"
-                                                   @if(old('status') == 'Wait') checked  @endif>
-                                            <label for="Wait" class="custom-control-label">قيد الإنتظار</label>
-                                        </div>
-                                        <div class="custom-control custom-radio">
-                                            <input onclick="myFunction()"  class="custom-control-input" type="radio" id="Active"
-                                                   name="status" value="Active"
-                                                   @if(old('status') == 'Active') checked @endif>
-                                            <label for="Active" class="custom-control-label">فعّال</label>
-                                        </div>
-                                        <div class="custom-control custom-radio">
-                                            <input onclick="myFunction()"  class="custom-control-input" type="radio" id="Blocked"
-                                                   name="status" value="Blocked"
-                                                   @if(old('status') == 'Blocked') checked  @else checked  @endif >
-                                            <label for="Blocked" class="custom-control-label">حظر</label>
-                                        </div>
-
-                                    </div>
 
                                     </div>
                                 </div>

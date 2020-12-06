@@ -15,9 +15,9 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->integer('gave')->nullable()->default(0);
-            $table->integer('discount')->default(0);
-            $table->Integer('real')->default(0);
+            $table->integer('gave')->nullable()->default(0)->nullable();
+            $table->integer('discount')->default(0)->nullable();
+            $table->Integer('real')->default(0)->nullable();
             $table->unsignedBigInteger('dealer_id')->nullable();
             $table->foreign('dealer_id')->references('id')->on('dealers');
             $table->string('day')->nullable();

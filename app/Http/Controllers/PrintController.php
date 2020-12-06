@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PrintController extends Controller
 {
@@ -38,6 +39,8 @@ class PrintController extends Controller
         return view('cms.bills.index', ['bills' => $bills, 'search' => 'no', 'from' => $from, 'to' => $to, 'user_id' => $request->get('user_id'), 'print' => 'user']);
     }
 
+
+
     public function databill(Request $request)
     {
         $from = Carbon::create($request->get('from'));
@@ -57,6 +60,18 @@ class PrintController extends Controller
         $user = User::find($request->user_id);
 
         return view('cms.reports.bills', ['bills' => $bills, 'data' => 'yes', 'from' => $from, 'to' => $to, 'name' => $user->name]);
+
+    }
+
+    public function Authuserbill(Request $request){
+
+              $from = Carbon::create($request->get('from'));
+        $to = Carbon::create($request->to);
+                $object = $this->billindex($request);
+                 $bills = $object->bills->where('user_id', Auth::id());
+        return view('cms.reports.bills', ['bills' => $bills,  'from' => $from, 'to' => $to,  ]);
+
+
 
     }
 

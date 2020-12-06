@@ -12,4 +12,9 @@ class DashBordController extends Controller
 
         return view('cms.dashbord',['users'=>User::all()]);
     }
+
+     public function user(){
+
+        return view('user.dashbord');
+    }
 }

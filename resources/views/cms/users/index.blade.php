@@ -74,8 +74,11 @@
                                         <th style="font-size: 17px">الإسم</th>
                                         <th style="font-size: 17px"> رقم الهوية</th>
                                         <th style="font-size: 17px">الهاتف</th>
+
                                         <th style="font-size: 17px">المبلغ الحالي</th>
                                         <th style="font-size: 17px">عرض المستخدم</th>
+                                      <th style="font-size: 17px">الحالة</th>
+
                                         <th style="font-size: 17px">الإعدادات</th>
                                     </tr>
                                 </thead>
@@ -128,14 +131,18 @@
                                                 </a>
                                                 <span class="badge badge-dark"></span>
                                             </td>
-                                            {{-- <td>
+                                            <td>
                                                 @if ($user->status == 'Active')
                                                     <span style="font-size: 17px" class="badge badge-success">نشط</span>
+
+                                                    @elseif($user->status=='Blocked')
+                                                    <span style="font-size: 17px" class="badge badge-danger">محظور</span>
                                                     @else
-                                                    <span style="font-size: 17px" class="badge badge-danger">متوقف</span>
+                                            <span style="font-size: 17px" class="badge badge-warning">تحت المتابعة</span>
+
                                                 @endif
 
-                                            </td> --}}
+                                            </td>
 
 
 
