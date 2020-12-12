@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bill;
+use App\Models\Images;
 use App\Models\User;
 use Carbon\Carbon;
 use GuzzleHttp\Promise\Create;
@@ -47,7 +48,8 @@ class PrintController extends Controller
         $to = Carbon::create($request->to);
         $object = $this->billindex($request);
         $bills = $object->bills;
-        return view('cms.reports.bills', ['bills' => $bills, 'data' => 'yes', 'from' => $from, 'to' => $to, 'name' => null]);
+        $image=Images::first();
+        return view('cms.reports.bills', ['bills' => $bills, 'data' => 'yes', 'from' => $from, 'to' => $to, 'name' => null,'image'=>$image]);
 
     }
 
@@ -59,7 +61,8 @@ class PrintController extends Controller
         $bills = $object->bills;
         $user = User::find($request->user_id);
 
-        return view('cms.reports.bills', ['bills' => $bills, 'data' => 'yes', 'from' => $from, 'to' => $to, 'name' => $user->name]);
+        $image=Images::first();
+        return view('cms.reports.bills', ['bills' => $bills, 'data' => 'yes', 'from' => $from, 'to' => $to, 'name' => $user->name,'image'=>$image]);
 
     }
 
@@ -70,8 +73,9 @@ class PrintController extends Controller
         $to = Carbon::create($request->to);
                 $object = $this->billindex($request);
                  $bills = $object->bills->where('user_id', Auth::id());
-                 dd($bills->sum('profit'));
-        return view('cms.reports.bills', ['bills' => $bills,  'from' => $from, 'to' => $to,  ]);
+                //  dd($bills->sum('profit'));
+                 $image=Images::first();
+        return view('cms.reports.user', ['bills' => $bills,  'from' => $from, 'to' => $to, 'image'=>$image ]);
 
 
 

@@ -21,6 +21,15 @@ class UserEventController extends Controller
         $events=Auth::user()->events()->where('status','Visible')->get();
         return view('user.events.index',['events'=>$events,'show'=>null]);
     }
+
+      public function userEnd()
+    {
+        //
+        $events=Auth::user()->events()->whereHas('details',function($query){
+            $query->where('end','!=',null);
+        })->where('status','Visible')->get();
+        return view('user.events.index',['events'=>$events,'show'=>null]);
+    }
        public function users($id)
     {
         // $users=User::all($id);
@@ -34,6 +43,26 @@ class UserEventController extends Controller
 
         return view('cms.users.index',['users'=>$users]);
     }
+
+        public function usersends($id)
+    {
+        // dd(54);
+        // $users=User::all($id);
+        $users=Event::find($id)->users()->whereHas('details',function($query){
+            $query->where('end','!=',null);
+        })->get();
+        // $users=$users->users;
+        // dd($users[0]->name);
+        // if(count($users)==0){
+        //     Alert::warning('لا يوجد مشترك');
+        //     return redirect()->back();
+        // }
+
+        return view('cms.users.index',['users'=>$users]);
+    }
+
+
+
 
 
     /**

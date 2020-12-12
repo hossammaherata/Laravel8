@@ -92,112 +92,35 @@
                                 class="lnr lnr-menu fa fa-bars"></i></button>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle icon-menu" data-toggle="dropdown">
-                                <i class="icon-envelope"></i>
-                                <span class="notification-dot bg-green">4</span>
-                            </a>
-                            <ul class="dropdown-menu right_chat email vivify fadeIn">
-                                <li class="header green">You have 4 New eMail</li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="media">
-                                            <div class="avtar-pic w35 bg-red"><span>FC</span></div>
-                                            <div class="media-body">
-                                                <span class="name">James Wert <small class="float-right text-muted">Just
-                                                        now</small></span>
-                                                <span class="message">Update GitHub</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="media">
-                                            <div class="avtar-pic w35 bg-indigo"><span>FC</span></div>
-                                            <div class="media-body">
-                                                <span class="name">Folisise Chosielie <small
-                                                        class="float-right text-muted">12min ago</small></span>
-                                                <span class="message">New Messages</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="media">
-                                            <img class="media-object "
-                                                src="{{ asset('cms/assets/images/xs/avatar5.jpg') }}" alt="">
-                                            <div class="media-body">
-                                                <span class="name">Louis Henry <small
-                                                        class="float-right text-muted">38min ago</small></span>
-                                                <span class="message">Design bug fix</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="media mb-0">
-                                            <img class="media-object "
-                                                src="{{ asset('cms/assets/images/xs/avatar2.jpg') }}" alt="">
-                                            <div class="media-body">
-                                                <span class="name">Debra Stewart <small
-                                                        class="float-right text-muted">2hr ago</small></span>
-                                                <span class="message">Fix Bug</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle icon-menu" data-toggle="dropdown">
+
+                             <li class="dropdown">
+                            <a href="#" onclick="dd()" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                                 <i class="icon-bell"></i>
-                                <span class="notification-dot bg-azura">4</span>
+                                @if(Auth::user()->unreadNotifications()->count()>0)
+
+                                <span id="countnot" class="notification-dot bg-azura">{{Auth::user()->unreadNotifications()->count()}}</span>
+                                   @endif
                             </a>
                             <ul class="dropdown-menu feeds_widget vivify fadeIn">
-                                <li class="header blue">You have 4 New Notifications</li>
-                                <li>
-                                    <a href="javascript:void(0);">
+                                @if(Auth::user()->unreadNotifications()->count()>0)
+                                <li class="header blue">لديك إشعارات جديدة</li>
+                                @endif
+
+                                @foreach (Auth::user()->Notifications as $item)
+
+                                   <li>
+                                   <a href="{{route('user.message')}}">
                                         <div class="feeds-left bg-red"><i class="fa fa-check"></i></div>
                                         <div class="feeds-body">
-                                            <h4 class="title text-danger">Issue Fixed <small
-                                                    class="float-right text-muted">9:10 AM</small></h4>
-                                            <small>WE have fix all Design bug with Responsive</small>
+                                            <h4 class="title text-danger">{{$item->data['title']}} <small
+                                                    class="float-right text-muted">{{$item->created_at->diffForHumans()}}</small></h4>
+                                            <small>{{$item->data['name']}}</small>
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="feeds-left bg-info"><i class="fa fa-user"></i></div>
-                                        <div class="feeds-body">
-                                            <h4 class="title text-info">New User <small
-                                                    class="float-right text-muted">9:15 AM</small></h4>
-                                            <small>I feel great! Thanks team</small>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="feeds-left bg-orange"><i class="fa fa-question-circle"></i></div>
-                                        <div class="feeds-body">
-                                            <h4 class="title text-warning">Server Warning <small
-                                                    class="float-right text-muted">9:17 AM</small></h4>
-                                            <small>Your connection is not private</small>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="feeds-left bg-green"><i class="fa fa-thumbs-o-up"></i></div>
-                                        <div class="feeds-body">
-                                            <h4 class="title text-success">2 New Feedback <small
-                                                    class="float-right text-muted">9:22 AM</small></h4>
-                                            <small>It will give a smart finishing to your site</small>
-                                        </div>
-                                    </a>
-                                </li>
+                                @endforeach
+
+
                             </ul>
                         </li>
                         <li class="dropdown language-menu">
@@ -472,7 +395,7 @@
 
         <div id="left-sidebar" class="sidebar">
             <div class="navbar-brand">
-                <a href="index.html"><img src="{{ asset('cms/assets/images/icon.svg') }}" alt="DiMax Logo"
+                <a href="{{route('admin.dashbord')}}"><img src="{{ asset('cms/assets/images/icon.svg') }}" alt="DiMax Logo"
                         class="img-fluid logo"><span>DiMax</span></a>
                 <button type="button" class="btn-toggle-offcanvas btn btn-sm float-right"><i
                         class="lnr lnr-menu icon-close"></i></button>
@@ -790,6 +713,29 @@
         });
     </script>
 
+<script src="{{asset('cms/html/assets/bundles/knob.bundle.js')}}"></script><!-- Jquery Knob-->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    function dd(){
+
+   axios.get('/cms/noti')
+                .then(function (response) {
+                              $('#countnot').hide();
+                    console.log(10);
+
+
+                })
+                .catch(function (error) {
+                    // handle error (Status Code: 400)
+                    console.log(error);
+                    console.log(error.response.data);
+                    showMessage(error.response.data);
+                })
+                .then(function () {
+                    // always executed
+                });
+    }
+</script>
 
     @yield('script')
 </body>

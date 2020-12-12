@@ -16,11 +16,14 @@
         th {
             border: 1px solid rgb(8, 1, 1);
             text-align: center;
+
         }
+
 
         table {
             border-collapse: collapse;
             width: 100%;
+
         }
 
         th,
@@ -36,6 +39,9 @@
 <body style="margin: 15px">
 
     <h2>DiMax</h2>
+       <div class="login-img">
+                <img  class="img-fluid" width="100px" height="100px" src="{{url('images/images/' . $image->imagelogin) }}" />
+                </div>
     @if ($data=='yes')
 <p  align="right" >كشف الفواتير من تاريخ <strong>{{$from}}</strong> حتى تاريخ <strong>{{$to}}</strong>@if($name) للمسوق<strong>{{$name}}</strong>@endif</p>
 @if($name)
@@ -44,8 +50,11 @@
     @else
     <p style="text"> <strong> الفواتير</strong>  </p>
     @endif
-    @foreach ($bills as $item)
 
+    <span hidden> {{$i=0}}</span>
+
+    @foreach ($bills as $item)
+                  <span hidden> {{++$i}}</span>
 
         <table style="margin: 10px; width:20% " align="right">
             <tr style="background-color: #c6ccd6">
@@ -69,13 +78,15 @@
 
         </table>
 
-        <table>
+        <table >
             <tr style="background-color: #c6ccd6">
                 <th>تقرير</th>
+                 <th>ربح التاجر</th>
                 <th style="background-color: rgb(22, 219, 88); color:rgb(14, 12, 12)">ربح المسوق</th>
                 <th>الحالة</th>
-                <th>سعر الجملة</th>
+
                 <th>سعر البيع</th>
+                 <th>سعر الجملة</th>
                 <th>الكمية</th>
                 <th>اسم الصنف</th>
 
@@ -83,13 +94,19 @@
                 <th style="width: 1px"> <span>م</span></th>
 
             </tr>
+               <span hidden>{{$profitadmin =0}}</span>
             @foreach ($item->orders as $order)
+
+         @if($order->status=='success')
+                      <span hidden>{{$profitadmin +=$order->profitadmin}}</span>
+            @endif
 
 
                 <tr>
-                    <td>{{ $order->note }}</td>
-                    <td style="background-color: rgb(22, 219, 88); color:rgb(14, 12, 12)">{{ $order->profit }}</td>
-                    <td>
+                    <td  style="width:10%">{{ $order->note }}</td>
+                    <td style="width:5%" >{{ $order->status=='success'? $order->profitadmin :0 }}</td>
+                    <td style="width:5%;background-color: rgb(22, 219, 88); color:rgb(14, 12, 12)">{{ $order->profit }}</td>
+                    <td style="width:10%">
 
                         @if ($order->status == 'success')
                             <span style="font-size: 17px" class="btn btn-success">تم التسليم</span>
@@ -103,11 +120,12 @@
                         @endif
 
                     </td>
-                    <td>{{ $order->realprice }}</td>
-                    <td>{{ $order->payprice }}</td>
-                    <td>{{ $order->count }}</td>
-                    <td>{{ $order->name }}</td>
-                    <td>{{ $order->id }}</td>
+                     <td style="width:10%">{{ $order->payprice }}</td>
+                    <td style="width:5%">{{ $order->realprice }}</td>
+
+                    <td style="width:5%">{{ $order->count }}</td>
+                    <td style="width:10%">{{ $order->name }}</td>
+                    <td style="width:1%">{{ $i }}</td>
 
                 </tr>
             @endforeach
@@ -125,19 +143,22 @@
 
             </tr> --}}
             <tr>
-                <td> سعر الجملة </td>
-                <td> سعر البيع </td>
-                <td  style="  text-align: left; background-color: rgb(180, 12, 12); color:rgb(255, 255, 255)">التوصيل </td>
-                <td>ربح المسوق</td>
 
+
+                 <td>ربح التاجر</td>
+                <td>ربح المسوق</td>
+                <td  style="  text-align: left; background-color: rgb(180, 12, 12); color:rgb(255, 255, 255)">التوصيل </td>
+                <td> إجمالي البيع </td>
+                <td> إجمالي الجملة </td>
 
             </tr>
                 <tr>
-                <td>{{  $item->realprice  }}</td>
-                <td>{{ $item->total }}</td>
-                <td  style="  text-align: left; background-color: rgb(180, 12, 12); color:rgb(255, 255, 255)">{{ -30 }}</td>
-                <td style="background-color: rgb(22, 219, 88); color:rgb(14, 12, 12)">  {{ $item->orders->where('status', 'success')->count() > 0 ? $item->orders->sum('profit') - 30 : $item->orders->sum('profit') }}</td>
 
+                <td>{{ $profitadmin }}</td>
+                <td style="background-color: rgb(22, 219, 88); color:rgb(14, 12, 12)">  {{ $item->orders->where('status', 'success')->count() > 0 ? $item->orders->sum('profit') - 30 : $item->orders->sum('profit') }}</td>
+                <td  style="  text-align: left; background-color: rgb(180, 12, 12); color:rgb(255, 255, 255)">{{ -30 }}</td>
+                <td>{{ $item->total }}</td>
+                <td>{{  $item->realprice  }}</td>
 
             </tr>
 

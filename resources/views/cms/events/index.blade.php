@@ -58,6 +58,8 @@
                                         <th style="font-size: 17px">الصورة</th>
                                         <th style="font-size: 17px">الوصف</th>
                                            <th style="font-size: 17px">المسوقين المشاركين</th>
+                                        <th style="font-size: 17px">تم الإنتهاء</th>
+
                                         <th style="font-size: 17px">الحالة</th>
                                         <th style="font-size: 17px">تاريخ الإنشاء</th>
                                          <th style="font-size: 17px">تاريخ الإنتهاء</th>
@@ -83,9 +85,19 @@
                                                       <td>
                                             <a class="btn btn-info btn-sm"
                                                href="{{route('users.events',[$item->id])}}">
-                                                <i class="icon-note">
+                                                <i class="icon-users">
                                                 </i>
-                                                ({{$item->users_count}}) عدد المسوقين
+                                                ({{$item->users_count}}) عدد المشاركين
+                                            </a>
+                                            <span class="badge badge-dark"></span>
+                                        </td>
+
+                                                     <td>
+                                            <a class="btn btn-danger btn-sm"
+                                               href="{{route('users.ends',[$item->id])}}">
+                                                <i class="icon-users">
+                                                </i>
+                                                 تم الإنتهاء
                                             </a>
                                             <span class="badge badge-dark"></span>
                                         </td>

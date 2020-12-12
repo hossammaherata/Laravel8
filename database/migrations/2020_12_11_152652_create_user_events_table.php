@@ -20,7 +20,7 @@ class CreateUserEventsTable extends Migration
 
             $table->unsignedBigInteger('event_id');
             $table->foreign('event_id')->references('id')->on('event');
-
+            $table->string('end')->nullable();
             $table->timestamps();
         });
     }

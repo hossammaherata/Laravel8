@@ -367,11 +367,11 @@ class OrderController extends Controller
 
                 // $bill->orders->where('status','success')->count() < 1 ? $ss=0 :$ss = 30;
 
-                  $discount=30;
-                if(($bill->orders->where('status','wait')->count()+$bill->orders->where('status','cancel')->count())==$bill->orders->count()){
-                    $discount=0;
-                }
-                   $bill->profit = $bill->orders->sum('profit') - $discount;
+                //   $discount=30;
+                // if(($bill->orders->where('status','wait')->count()+$bill->orders->where('status','cancel')->count())==$bill->orders->count()){
+                //     $discount=0;
+                // }
+                   $bill->profit = $bill->orders->sum('profit') ;
 
 
             // }

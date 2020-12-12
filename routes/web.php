@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('user.parent');
+    return view('site');
     // dd(User::find(1)->orders);
     // return redirect()->route('user.index');
 });
@@ -110,6 +110,8 @@ Route::post('/profit/admin/',[ProfitAdminController::class,'adminProfit'])->name
 
 ////////////////////////////////
   Route::get('/all/users/events/{id}',[UserEventController::class,'users'])->name('users.events');
+    Route::get('/all/users/ends/{id}',[UserEventController::class,'usersends'])->name('users.ends');
+
 Route::post('/event/store',[EventController::class,'store'])->name('event.store');
 Route::get('/event',[EventController::class,'index'])->name('event.index');
 Route::put('/event/update/{id}',[EventController::class,'update'])->name('event.update');
@@ -160,6 +162,8 @@ Route::get('/contact',[UserAccessController::class,'contact'])->name('user.conta
       Route::get('/profile',[UserAccessController::class,'getviewprofile'])->name('user.profile.view');
   Route::post('/profile',[UserAccessController::class,'store'])->name('user.profile.store');
 Route::get('/events/user',[EventController::class,'events'])->name('alleve.user');
+// Route::get('/events/end/user',[EventController::class,'userEnd'])->name('alleveend.user');
+
 
   Route::get('/user/message/user',[AllNotController::class,'MyMessage'])->name('user.message');
       Route::get('/user/message/show/{id}',[AllNotController::class,'showuser'])->name('show.usermessage');
@@ -172,7 +176,12 @@ Route::get('/events/user',[EventController::class,'events'])->name('alleve.user'
        });
 
        Route::get('/user/add/events/{id}/{evid}',[EventController::class,'add'])->name('user.add.event');
+
+              Route::get('/user/end/events/{id}/{evid}',[EventController::class,'end'])->name('user.end');
+
        Route::get('/user/auth/event',[UserEventController::class,'user'])->name('user.auth.event');
+
+              Route::get('/user/auth/event/end',[UserEventController::class,'userEnd'])->name('user.auth.event.end');
 
 
 

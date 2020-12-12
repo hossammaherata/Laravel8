@@ -10,6 +10,8 @@
                             <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{route('user.auth.event')}}">مسابقاتي </a></li>
                             <li class="breadcrumb-item"><a href="{{route('alleve.user')}}">جميع المسابقات</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('user.auth.event.end')}}">المسابقات المنتهية</a></li>
+
                             {{-- <li class="breadcrumb-item active" aria-current="page">Light Gallery</li> --}}
                             </ol>
                         </nav>
@@ -29,6 +31,8 @@
                     @if($show=='yes')
                     <a href="{{route('user.add.event',[Auth::id(),$item->id])}}" id="aeg" class=" btn btn-success">إشتراك</a>
                     @endif
+                    <a href="{{route('user.end',[Auth::id(),$item->id])}}" id="aeg" class=" btn btn-danger">إنهاء</a>
+
                 </div>
                 @endforeach
 

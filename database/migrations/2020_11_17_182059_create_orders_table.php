@@ -24,7 +24,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('bill_id')->references('id')->on('bills')->onDelete('cascade');
             $table->softDeletes();
             $table->enum('status', ['wait', 'success','cancel','return'])->default('wait');
-            $table->integer('discount')->default(0);
+            $table->integer('discount')->default(0)->nullable();
             $table->integer('profitadmin')->default(0);
             $table->string('note')->nullable();
             $table->timestamps();
