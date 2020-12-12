@@ -572,21 +572,28 @@
                                     class="fa fa-dollar"></i><span>الأرباح</span></a>
 
                         </li>
+                           <li>
+                            <a href="#myPage" class="has-arrow"><i class="icon-envelope"></i><span>الرسائل</span></a>
+                            <ul>
+                                <li class="active"><a href="#" data-toggle="modal" data-target="#messageusers">رسالة للجميع
+                                    </a></li>
+                                <li><a href="{{route('mes.index')}}"> جميع الرسائل</a></li>
+                            </ul>
+                        </li>
+
                         <li class="header">___</li>
 
 
                         <li><a href="{{ route('truch.index') }}"><i class=" fa fa-trash"></i><span>المحذوفات</span></a>
                         </li>
                     <li><a href="{{route('contact.index')}}"><i class="icon-grid"></i><span>تواصل معنا</span></a></li>
+                     <li><a class="loginimage" href="#"><i class="icon-fire"></i><span>صورة تسجيل الدخول</span></a></li>
 
-                        <li class="header">UI Elements</li>
-
-                        <li><a href="map-jvectormap.html"><i class="icon-map"></i><span>jVector Map</span></a></li>
-                        <li class="header">Extra</li>
+                        {{-- <li class="header">التواصل</li> --}}
 
 
-                        <li><a href="../documentation/index.html"><i class="icon-doc"></i><span>Documentation</span></a>
-                        </li>
+                                            <li><a href="{{route('admin.logout')}}"><i class="icon-power"></i><span>تسجيل خروج</span></a>
+
                     </ul>
                 </nav>
             </div>
@@ -640,6 +647,8 @@
         </div>
         {{-- //////////////// --}}
 
+
+
         @yield('content')
 
     </div>
@@ -652,6 +661,7 @@
 
         </div>
     </div>
+      <div id="loginimage"></div>
     <div id="paidmodal"></div>
     <!-- Javascript -->
     <script src="{{ asset('cms/html/assets/bundles/libscripts.bundle.js') }}"></script>
@@ -738,7 +748,7 @@
                         </div>
 
                         <div class="form-group" id="dd">
-                            <label style="font-size: 20px">ملاححظة</label>
+                            <label style="font-size: 20px">ملاحظة</label>
                             <input type="text" class="form-control hosam" value="{{ old('name') }}"
                                 style="font-size: 20px" name="note" placeholder=" ملاحظة ">
                         </div>
@@ -755,6 +765,7 @@
             </div>
 
         </div>
+
     </div>
     <script>
         $(".paid").click(function() {
@@ -766,7 +777,20 @@
             });
         });
 
+   $(".loginimage").click(function() {
+            // var lang = document.getElementById("Language12").value;
+        //    console.log('45');
+            $.get('/cms/image').done(function(item) {
+                console.log(item);
+                console.log(10);
+                // $item.print();
+                $('#loginimage').replaceWith(item);
+                $('#loginimage').modal("show");
+            });
+        });
     </script>
+
+
     @yield('script')
 </body>
 {{-- all Bills --}}
@@ -903,5 +927,35 @@
 
     </div>
 </div>
+ <div class="modal fade feed-post-modal" id="messageusers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <div class="d-flex mb-3">
+
+                                                <div>
+                                                <h6 class="mb-0">رسالة للجميع</h6>
+
+                                                </div>
+                                            </div>
+                                        <form action="{{route('mes.store')}}" method="POST">
+                                            @csrf
+                                               <div class="input-group">
+                                            <input type="text" class="form-control" name="title"
+                                                 placeholder="الموضوع">
+                                        </div>
+                                        <br>
+                                            <div class="form-group">
+                                            <textarea rows="4" name="body" class="form-control no-resize" placeholder="نص الرسالة..."></textarea>
+                                            </div>
+                                        {{-- <input type="hidden" name="user_id" value="{{$user->id}}"> --}}
+                                            <div class="align-right">
+                                                <button type="submit" class="btn btn-round btn-warning" >إرسال</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 </html>

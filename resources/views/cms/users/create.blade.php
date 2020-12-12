@@ -120,7 +120,7 @@
 
 
 
-                       <div class="form-group">
+                                            <div class="form-group">
                                         <label for="exampleInputPassword1">حالة المسوق</label>
                                         <div class="custom-control custom-radio">
                                             <input onclick="myFunction()"  class="custom-control-input" type="radio" id="Wait"

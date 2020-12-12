@@ -52,7 +52,7 @@
                 <th>اسم المسوق</th>
                 <th>اسم الزبون</th>
                 <th>الهاتف</th>
-                <th>تاريخ الفاتورة</th>
+                <th>التاريخ </th>
 
 
             </tr>
@@ -115,7 +115,36 @@
 
 
         </table>
+         <table style="margin: 10px; width:20% " >
+            {{-- <tr style="background-color: #c6ccd6">
+                <th>-</th>
+                <th>-</th>
+                <th>-</th>
+                <th> -</th>
 
+
+            </tr> --}}
+            <tr>
+                <td> سعر الجملة </td>
+                <td> سعر البيع </td>
+                <td  style="  text-align: left; background-color: rgb(180, 12, 12); color:rgb(255, 255, 255)">التوصيل </td>
+                <td>ربح المسوق</td>
+
+
+            </tr>
+                <tr>
+                <td>{{  $item->realprice  }}</td>
+                <td>{{ $item->total }}</td>
+                <td  style="  text-align: left; background-color: rgb(180, 12, 12); color:rgb(255, 255, 255)">{{ -30 }}</td>
+                <td style="background-color: rgb(22, 219, 88); color:rgb(14, 12, 12)">  {{ $item->orders->where('status', 'success')->count() > 0 ? $item->orders->sum('profit') - 30 : $item->orders->sum('profit') }}</td>
+
+
+            </tr>
+
+
+
+        </table>
+{{--
         <table style="margin: 10px; width:20% " align="left">
             <tr style="background-color: #c6ccd6">
                 <th>إجمالي سعر الجملة</th>
@@ -144,16 +173,13 @@
 
 
 
-        </table>
+        </table> --}}
 
 
 
         <br>
         <br>
-        <br>
-        <br>
-        <br>
-        <br>
+
 
 
         <hr>

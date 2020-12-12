@@ -362,6 +362,9 @@
                                 <th
                                     style="border-collapse: collapse; border: 1px solid black; padding: 5px;  text-align: left; background-color: rgb(22, 219, 88); color:rgb(14, 12, 12)">
                                     ربح المسوق</th>
+                                    <th
+                                    style="border-collapse: collapse; border: 1px solid black; padding: 5px;  text-align: left; background-color: rgb(22, 219, 88); color:rgb(14, 12, 12)">
+                                    ربح التاجر</th>
 
                             </tr>
                             <tr>
@@ -382,6 +385,10 @@
                                 <td
                                     style="border-collapse: collapse; border: 1px solid black; padding: 5px;  text-align: left; background-color: rgb(22, 219, 88); color:rgb(14, 12, 12) ">
                                     {{ $bill->orders->where('status', 'success')->count() > 0 ? $bill->orders->sum('profit') - 30 : $bill->orders->sum('profit') }}
+                                </td>
+                                <td
+                                    style="border-collapse: collapse; border: 1px solid black; padding: 5px;  text-align: left; background-color: rgb(22, 219, 88); color:rgb(14, 12, 12) ">
+                                    {{ $bill->orders->where('status','success')->sum('profitadmin')}}
                                 </td>
                             </tr>
 

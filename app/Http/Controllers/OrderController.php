@@ -209,7 +209,7 @@ class OrderController extends Controller
         }
 
         if ($order->status != 'success' && $request->get('status') == 'success') {
-
+            // 9-12-2020
             // الأصل ليست ناجحة والقادمة نجاح
             // if($order->status=='')
             $price = $request->get('realprice');

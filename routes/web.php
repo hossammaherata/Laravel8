@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AllNotController;
 use App\Http\Controllers\Auth\AdminAuthController;
+use App\Http\Controllers\Auth\UserAuthController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\DashBordController;
 use App\Http\Controllers\SearchController;
@@ -17,10 +19,12 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfitAdminController;
 use App\Http\Controllers\TruchController;
 use App\Http\Controllers\ContactController;
-
+use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\UserAccessController;
+use App\Http\Controllers\UserEventController;
 use App\Models\Paid;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,7 +44,9 @@ Route::get('/', function () {
     // return redirect()->route('user.index');
 });
 
-Route::resource('twit',TwitController::class);
+
+
+Route::resource('twit',TwitController::class)->middleware('auth:admin');
 // Route::resource('admin', AdminController::class);
 //////////////////////////////////////
 ///////////////Admin////////////////
@@ -49,6 +55,16 @@ Route::resource('twit',TwitController::class);
 Route::prefix('cms/')->middleware('auth:admin')->group(function () {
 Route::resource('admin', AdminController::class);
 
+Route::get('image',[ImagesController::class,'index'])->name('image.index');
+Route::post('image',[ImagesController::class,'store'])->name('image.store');
+
+Route::post('/user/mes/',[AllNotController::class,'user'])->name('mes.user');
+Route::post('/user/all/',[AllNotController::class,'store'])->name('mes.store');
+Route::get('/mes/all/',[AllNotController::class,'index'])->name('mes.index');
+// Route::get('/mes/all/',[AllNotController::class,'index'])->name('mes.index');
+
+Route::delete('/delete/message/{id}',[AllNotController::class,'destroy'])->name('mes.delete');
+
 
 Route::post('user/serach',[SearchController::class,'SearchUser'])->name('user.search');
 Route::post('user/serach/bill',[SearchController::class,'BillUsers'])->name('bill.user.search');
@@ -56,6 +72,7 @@ Route::post('dealer/search/',[SearchController::class,'dealsearch']);
 Route::get('/print',[PrintController::class,'index'])->name('print');
 Route::get('/deal/products/{id}/',[DealerController::class,'dealProducts'])->name('deal.proud');
 Route::get('dashbord',[DashBordController::class,'admin'])->name('admin.dashbord');
+Route::get('/admin/message/{id}',[AllNotController::class,'show'])->name('mis.show');
 Route::resource('user', UserController::class);
 Route::resource('paid', PaidController::class);
 Route::resource('deal', DealerController::class);
@@ -92,6 +109,7 @@ Route::delete('/truch/restore/event/{id}',[TruchController::class,'eventRestore'
 Route::post('/profit/admin/',[ProfitAdminController::class,'adminProfit'])->name('admin.profit');
 
 ////////////////////////////////
+  Route::get('/all/users/events/{id}',[UserEventController::class,'users'])->name('users.events');
 Route::post('/event/store',[EventController::class,'store'])->name('event.store');
 Route::get('/event',[EventController::class,'index'])->name('event.index');
 Route::put('/event/update/{id}',[EventController::class,'update'])->name('event.update');
@@ -102,6 +120,12 @@ Route::delete('/event/delete/{id}',[EventController::class,'delete'])->name('eve
 Route::resource('contact',ContactController::class);
     Route::get('logout', [AdminAuthController::class,'logout'])->name('admin.logout');
 
+       Route::get('noti', function () {
+    $user=Auth::user();
+    foreach($user->unreadNotifications as $item){
+    $item->markAsRead();
+       }
+       });
 
 });
 
@@ -127,12 +151,44 @@ Route::prefix('cms/admin/')->namespace('Auth')->group(function () {
 ///////////////Admin////////////////////
 
 
-Route::prefix('auth/')->group(function () {
+Route::prefix('auth/')->middleware('auth:user')->group(function () {
 Route::post('/user/bills',[PrintController::class,'Authuserbill'])->name('auth.bills');
 Route::get('/',[DashBordController::class,'user'])->name('user.dashbord');
 Route::get('/Product',[UserAccessController::class,'twit'])->name('user.twit');
 Route::get('/contact',[UserAccessController::class,'contact'])->name('user.contact');
+    Route::get('logout', [UserAuthController::class,'logout'])->name('user.logout');
+      Route::get('/profile',[UserAccessController::class,'getviewprofile'])->name('user.profile.view');
+  Route::post('/profile',[UserAccessController::class,'store'])->name('user.profile.store');
+Route::get('/events/user',[EventController::class,'events'])->name('alleve.user');
 
+  Route::get('/user/message/user',[AllNotController::class,'MyMessage'])->name('user.message');
+      Route::get('/user/message/show/{id}',[AllNotController::class,'showuser'])->name('show.usermessage');
+
+      Route::get('noti', function () {
+    $user=Auth::user();
+    foreach($user->unreadNotifications as $item){
+    $item->markAsRead();
+       }
+       });
+
+       Route::get('/user/add/events/{id}/{evid}',[EventController::class,'add'])->name('user.add.event');
+       Route::get('/user/auth/event',[UserEventController::class,'user'])->name('user.auth.event');
+
+
+
+
+
+    });
+
+Route::prefix('auth/user')->namespace('Auth')->group(function () {
+    Route::get('page/login', [UserAuthController::class,'showLoginView'])->name('user.login.view');
+    Route::post('login',  [UserAuthController::class,'login'])->name('user.login.store');
+    Route::get('blocked', [UserAuthController::class,'blocked'])->name('user.blocked');
+        Route::get('wait', [UserAuthController::class,'wait'])->name('user.wait');
+
+
+    // Route::get('forgot-password', 'AdminAuthController@showForgetPassword')->name('cms.admin.forgot_password_view');
+    // Route::post('forgot-password', 'AdminAuthController@requestNewPassword')->name('cms.admin.forgot_password');
 });
 
 

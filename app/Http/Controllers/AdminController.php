@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -79,10 +80,11 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+                $request->request->add(['id' =>Auth::id()]);
+
             $request->validate([
                 'name'=>'required',
-                'email'=>'required|unique:users,email',
+                'email'=>'required|unique:users,email|unique:admins,email,'.$id,
                 'image'=>'image',
 
             ],[

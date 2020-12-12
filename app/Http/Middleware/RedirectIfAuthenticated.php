@@ -37,16 +37,16 @@ class RedirectIfAuthenticated
                 }
             }
         }
-        // else if ($guard == 'admin'){
-        //     if (Auth::guard('admin')->check()){
-        //         $user = Auth::guard('admin')->user();
-        //         if ($user->status == "Active"){
-        //             return redirect()->route('cms.admin.dashboard');
-        //         }else{
-        //             // return redirect()->route('cms.author.blocked');
-        //         }
-        //     }
-        // }
+        else if ($guard == 'user'){
+            if (Auth::guard('user')->check()){
+                $user = Auth::guard('user')->user();
+                if ($user->status == "Active"){
+                    return redirect()->route('user.dashbord');
+                }else{
+                    return redirect()->route('user.blocked');
+                }
+            }
+        }
 
         return $next($request);
     }

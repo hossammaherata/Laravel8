@@ -147,7 +147,7 @@
 
 
                                             <td>
-                                                <a href="{{ route('user.edit', [$user->token]) }}" type="button"
+                                                <a href="#" type="button"
                                                     style="font-size: 20px" class="btn btn-sm btn-default" title="تعديل"><i
                                                         class="fa fa-edit"></i> تعديل</a>
                                                 <a

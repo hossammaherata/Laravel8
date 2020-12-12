@@ -43,9 +43,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function users(){
-        return $this->hasMany(User::class, 'user_id', 'id');
-    }
+    // public function users(){
+    //     return $this->hasMany(User::class, 'user_id', 'id');
+    // }
     public function bills(){
         return $this->hasMany(Bill::class, 'user_id', 'id');
     }
@@ -61,9 +61,20 @@ class User extends Authenticatable
 
 
         }
+         public function messages(){
+        return $this->hasMany(AllNot::class,'user_id','id');
+    }
         //   public function details(){
         // return $this->hasManyThrough(OrderProduct::class,Order::class,'user_id','order_id');
 
 
         // }
+        public  function events()
+    {
+        return $this->belongsToMany(Event::class,UserEvent::class,'user_id','event_id');
+    }
+
+     public function details(){
+          return $this->hasMany(UserEvent::class,'user_id','id');
+      }
 }

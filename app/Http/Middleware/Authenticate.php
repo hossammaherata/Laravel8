@@ -23,9 +23,9 @@ class Authenticate extends Middleware
             return route($loginRoute);
 
         }
-        // else if($this->auth->guard('user')){
-        //     $loginRoute = "user.login.view";
-        //     return route($loginRoute);
-        // }
+        else if($this->auth->guard('user')){
+            $loginRoute = "user.login.view";
+            return route($loginRoute);
+        }
     }
 }

@@ -107,10 +107,10 @@ class BillController extends Controller
         $bill=Bill::find($id);
          $bill->name=$request->get('name')? $request->get('name'):"لا يوجد اسم ";
         $bill->mobile=$request->get('mobile')? $request->get('mobile'):"لا يوجد رقم ";
-                $bill->status=$request->get('status')=='on'?'yes':'no';
+                $bill->status=$request->get('status');
 
         $bill->save();
-        Alert::success('تم تعديل الزبون بنجاح');
+        Alert::success('تم التعديل  بنجاح');
         return redirect()->back();
 
     }

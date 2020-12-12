@@ -14,9 +14,7 @@
                             </ol>
                         </nav>
                     </div>
-                    <div class="col-md-6 col-sm-12 text-right hidden-xs">
-                        <a href="javascript:void(0);" class="btn btn-sm btn-primary btn-round" title="">Add New</a>
-                    </div>
+
                 </div>
             </div>
             <div class="row clearfix">
@@ -35,6 +33,9 @@
                             <div>
                                 <a href="#"  data-toggle="modal" data-target="#userpaid" class="btn btn-primary btn-sm">كشف الدفعات</a>
                                 <a href="#" data-toggle="modal" data-target="#userBill" class="btn btn-success btn-sm">كشف الفواتير</a>
+                            <button type="button" class="btn  btn-info" data-toggle="modal" data-target=".feed-post-modal">رسالة</button>
+
+
                             <a href="{{route('user.edit',[$user->token])}}" class="btn btn-danger btn-sm">تعديل</a>
 
 
@@ -178,5 +179,34 @@
         </div>
 
     </div>
+
 </div>
+      <div class="modal fade feed-post-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+
+                                        <form action="{{route('mes.user')}}" method="POST">
+                                            @csrf
+                                               <div class="input-group">
+                                            <input type="text" class="form-control" name="title"
+                                                 placeholder="الموضوع">
+                                               </div>
+                                                 <br>
+                                            <div class="form-group">
+                                            <textarea rows="4" name="body" class="form-control no-resize" placeholder="نص الرسالة..."></textarea>
+                                            </div>
+                                        <input type="hidden" name="user_id" value="{{$user->id}}">
+                                            <div class="align-right">
+                                                <button type="submit" class="btn btn-round btn-warning" >إرسال</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+@endsection
+@section('script')
+    <script src="{{asset('cms/assets/vendor/jquery-steps/jquery.steps.js')}}"></script><!-- JQuery Steps Plugin Js -->
+
 @endsection

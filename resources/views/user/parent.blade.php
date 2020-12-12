@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="{{ asset('cms/assets/vendor/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('cms/assets/vendor/font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('cms/assets/vendor/animate-css/vivify.min.css') }}">
+<link rel="stylesheet" href="{{asset('cms/assets/vendor/light-gallery/css/lightgallery.css')}}">
 
 <link rel="stylesheet" href="{{asset('cms/assets/vendor/jquery-datatable/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('cms/assets/vendor/jquery-datatable/fixedeader/dataTables.fixedcolumns.bootstrap4.min.css')}}">
@@ -228,7 +229,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0);">
+                                <a href="#">
                                         <div class="media mb-0">
                                             <img class="media-object "
                                                 src="{{ asset('cms/assets/images/xs/avatar2.jpg') }}" alt="">
@@ -243,52 +244,33 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle icon-menu" data-toggle="dropdown">
+                            <a href="#" onclick="dd()" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                                 <i class="icon-bell"></i>
-                                <span class="notification-dot bg-azura">4</span>
+                                @if(Auth::user()->unreadNotifications()->count()>0)
+
+                                <span id="countnot" class="notification-dot bg-azura">{{Auth::user()->unreadNotifications()->count()}}</span>
+                                   @endif
                             </a>
                             <ul class="dropdown-menu feeds_widget vivify fadeIn">
-                                <li class="header blue">You have 4 New Notifications</li>
-                                <li>
-                                    <a href="javascript:void(0);">
+                                @if(Auth::user()->unreadNotifications()->count()>0)
+                                <li class="header blue">لديك إشعارات جديدة</li>
+                                @endif
+
+                                @foreach (Auth::user()->Notifications as $item)
+
+                                   <li>
+                                   <a href="{{route('user.message')}}">
                                         <div class="feeds-left bg-red"><i class="fa fa-check"></i></div>
                                         <div class="feeds-body">
-                                            <h4 class="title text-danger">Issue Fixed <small
-                                                    class="float-right text-muted">9:10 AM</small></h4>
-                                            <small>WE have fix all Design bug with Responsive</small>
+                                            <h4 class="title text-danger">{{$item->data['title']}} <small
+                                                    class="float-right text-muted">{{$item->created_at->diffForHumans()}}</small></h4>
+                                            <small>رسالة</small>
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="feeds-left bg-info"><i class="fa fa-user"></i></div>
-                                        <div class="feeds-body">
-                                            <h4 class="title text-info">New User <small
-                                                    class="float-right text-muted">9:15 AM</small></h4>
-                                            <small>I feel great! Thanks team</small>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="feeds-left bg-orange"><i class="fa fa-question-circle"></i></div>
-                                        <div class="feeds-body">
-                                            <h4 class="title text-warning">Server Warning <small
-                                                    class="float-right text-muted">9:17 AM</small></h4>
-                                            <small>Your connection is not private</small>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="feeds-left bg-green"><i class="fa fa-thumbs-o-up"></i></div>
-                                        <div class="feeds-body">
-                                            <h4 class="title text-success">2 New Feedback <small
-                                                    class="float-right text-muted">9:22 AM</small></h4>
-                                            <small>It will give a smart finishing to your site</small>
-                                        </div>
-                                    </a>
-                                </li>
+                                @endforeach
+
+
                             </ul>
                         </li>
 
@@ -302,9 +284,12 @@
                         <ul class="nav navbar-nav">
                             <li><a href="javascript:void(0);" class="search_toggle icon-menu" title="Search Result"><i
                                         class="icon-magnifier"></i></a></li>
+                                        <li><a href="{{route('user.profile.view')}}" class=" icon-menu" title="Right Menu"><i
+                                        class="icon-user"></i></a>
+                            </li>
 
 
-                            <li><a href="#" class="icon-menu"><i class="icon-power"></i></a></li>
+                            <li><a href="{{route('user.logout')}}" class="icon-menu"><i class="icon-power"></i></a></li>
 
                         </ul>
                     </div>
@@ -553,8 +538,8 @@
             <div class="sidebar-scroll">
                 <div class="user-account">
                     <div class="user_div">
-                        <a href="">
-                              <img src="#" class="user-photo"
+                        <a href="{{route('user.profile.view')}}">
+                              <img src="{{ url('images/users/' . Auth::user()->image) }}" class="user-photo"
                             alt="User Profile Picture">
                         </a>
 
@@ -583,7 +568,7 @@
 
                         </li>
                         <li>
-                            <a href="#" class="has-arrow"><i class="icon-diamond"></i><span>المسابقات</span></a>
+                        <a href="{{route('alleve.user')}}" class="has-arrow"><i class="icon-diamond"></i><span>المسابقات</span></a>
 
                         </li>
 
@@ -596,9 +581,9 @@
 
 
 
-                        <li><a href="../documentation/index.html"><i class="icon-envelope"></i><span>الرسائل</span></a>
+                        <li><a href="{{route('user.message')}}"><i class="icon-envelope"></i><span>الرسائل</span></a>
                         </li>
-                        <li><a href="../documentation/index.html"><i class="icon-power"></i><span>تسجيل خروج</span></a>
+                        <li><a href="{{route('user.logout')}}"><i class="icon-power"></i><span>تسجيل خروج</span></a>
                         </li>
                     </ul>
                 </nav>
@@ -614,7 +599,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="addform" action="{{ route('view.bill.index') }}" method="POST">
+                <form id="addform" action="{{ route('auth.bills') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputEmail1" style="font-size: 20px">من</label>
@@ -649,6 +634,8 @@
 </div>
 
         @yield('content')
+            @include('sweetalert::alert')
+
 
     </div>
 
@@ -676,7 +663,29 @@
 <script src="{{asset('cms/html/assets/js/pages/tables/jquery-datatable.js')}}"></script>
 {{-- ___________________________ --}}
 <script src="{{asset('cms/html/assets/bundles/knob.bundle.js')}}"></script><!-- Jquery Knob-->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+<script>
+    function dd(){
+
+   axios.get('/auth/noti')
+                .then(function (response) {
+                              $('#countnot').hide();
+                    console.log(10);
+
+
+                })
+                .catch(function (error) {
+                    // handle error (Status Code: 400)
+                    console.log(error);
+                    console.log(error.response.data);
+                    showMessage(error.response.data);
+                })
+                .then(function () {
+                    // always executed
+                });
+    }
+</script>
 {{-- multi --}}
 
 <script src="{{asset('cms/assets/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js')}}"></script><!-- Bootstrap Colorpicker Js -->

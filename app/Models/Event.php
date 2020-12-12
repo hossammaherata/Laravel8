@@ -10,4 +10,11 @@ class Event extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    public  function users()
+    {
+        return $this->belongsToMany(User::class,UserEvent::class,'event_id','user_id');
+    }
+     public function details(){
+          return $this->hasMany(UserEvent::class,'event_id','id');
+      }
 }

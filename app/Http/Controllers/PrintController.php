@@ -65,10 +65,12 @@ class PrintController extends Controller
 
     public function Authuserbill(Request $request){
 
+        // dd(54);
               $from = Carbon::create($request->get('from'));
         $to = Carbon::create($request->to);
                 $object = $this->billindex($request);
                  $bills = $object->bills->where('user_id', Auth::id());
+                 dd($bills->sum('profit'));
         return view('cms.reports.bills', ['bills' => $bills,  'from' => $from, 'to' => $to,  ]);
 
 

@@ -42,17 +42,33 @@
                                           </div>
                                       </div>
 
-                                        <div class="col-lg-3 col-md-3 col-sm-6">
+                                        {{-- <div class="col-lg-3 col-md-3 col-sm-6">
                                             <label style="font-size: 20px">___</label>
                                             <div class="custom-control custom-switch">
                                                 <input type="checkbox" class="custom-control-input" name="status"
-                                                    id="status" @if ($item->status == 'yes')
-                                                checked @endif>
+                                                    id="status">
                                                 <label class="custom-control-label" style="font-size: 20px"
                                                     for="status">التقييم</label>
 
                                             </div>
+                                        </div> --}}
+                                                  <div class="form-group">
+                                        <label for="exampleInputPassword1">حالة التسليم</label>
+                                        <div class="custom-control custom-radio">
+                                            <input onclick="myFunction()"  class="custom-control-input" type="radio" id="yes"
+                                                   name="status" value="yes"
+                                                   @if($item->status == 'yes') checked  @endif>
+                                            <label for="yes" class="custom-control-label">تم التقييم</label>
                                         </div>
+                                                       <div class="custom-control custom-radio">
+                                            <input onclick="myFunction()"  class="custom-control-input" type="radio" id="no"
+                                                   name="status" value="no"
+                                                   @if($item->status == 'no') checked  @endif>
+                                            <label for="no" class="custom-control-label">قيد العمل</label>
+                                        </div>
+
+
+                                    </div>
 
 
 

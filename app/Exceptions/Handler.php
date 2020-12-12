@@ -38,18 +38,18 @@ class Handler extends ExceptionHandler
 
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-        if ($request->expectsJson()) {
-            return response()->json(['message' => $exception->getMessage()], 401);
-        }
+        // if ($request->expectsJson()) {
+        //     return response()->json(['message' => $exception->getMessage()], 401);
+        // }
 
         $guard = Arr::get($exception->guards(), 0);
         if ($guard == 'admin'){
             $login = 'admin.login.view';
 
         }
-        // else if ($guard == 'user'){
-        //     $login = 'user.login.view';
-        // }
+        else if ($guard == 'user'){
+            $login = 'user.login.view';
+        }
         return redirect()->guest(route($login));
     }
 }
