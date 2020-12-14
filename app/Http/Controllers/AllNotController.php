@@ -29,7 +29,8 @@ class AllNotController extends Controller
      public function showuser($id)
     {
         // return 10;
-$message=AllNot::find($id);
+// $message=AllNot::find($id);
+$message=Auth::user()->messages()->where('id',$id)->first();
     //  return $message->id;
         return view('user.messages._show',['message'=>$message]);
         //

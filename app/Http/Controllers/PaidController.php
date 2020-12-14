@@ -34,8 +34,8 @@ class PaidController extends Controller
         $tos = $request->get('to');
 
 
-        $from = Carbon::create($request->from, 'US/Central');
-        $to = Carbon::create($request->to, 'US/Central');
+        $from = Carbon::create($request->from);
+        $to = Carbon::create($request->to);
 
 
         $users = User::with(['bills' => function ($query) use ($from, $to) {
@@ -43,7 +43,7 @@ class PaidController extends Controller
             $query->where('created_at', '>=', $from)->where('created_at', '<=', $to)->withTrashed()->with('orders');
         }])->withTrashed()->withCount('bills')->get();
 
-
+        // dd($users);
 
 
         return view('cms.paids.users', ['users' => $users, 'from' => $from, 'to' => $to]);
@@ -60,8 +60,8 @@ class PaidController extends Controller
         $tos = $request->get('to');
 
 
-        $from = Carbon::create($request->from, 'US/Central');
-        $to = Carbon::create($request->to, 'US/Central');
+        $from = Carbon::create($request->from);
+        $to = Carbon::create($request->to);
 
 
         $users = User::with(['bills' => function ($query) use ($from, $to) {
@@ -83,8 +83,8 @@ class PaidController extends Controller
             return redirect()->back();
         }
         $object = $this->PrintUsersPaid($request);
-        $from = Carbon::create($object->from);
-        $to = Carbon::create($object->to);
+        $from = Carbon::create($request->from);
+        $to = Carbon::create($request->to);
 
         return view('cms.reports.paidusers', ['users' => $object->users, 'to' => $to, 'from' => $from]);
     }

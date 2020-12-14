@@ -71,6 +71,12 @@
                                     @foreach ($users as $user)
                                     @if($user->bills->count() >0)
                                         <span hidden>{{ $i++ }}</span>
+                                        <span hidden>{{$countBills=0}}</span>
+                                                    @foreach ($user->bills as $bill)
+
+                                            <span hidden> {{$bill->orders->where('status','success')->count()  > 0 ?$countBills+=30: " " }}</span>
+
+                                                   @endforeach
 
                                         <tr>
 
@@ -78,7 +84,7 @@
 
 
                                             <td>
-                                                @if ($user->bills->sum('profit') >= 0)
+                                                @if ($user->bills->sum('profit') - $countBills >= 0)
                                                 <a class="btn btn-success btn-sm" @else <a class="btn btn-danger btn-sm"
                                                         @endif
 
@@ -87,7 +93,7 @@
                                                         <i class="fa fa-dollar">
                                                         </i>
 
-                                                        {{ $user->bills->sum('profit') }}
+                                                        {{ $user->bills->sum('profit') -$countBills }}
                                                     </a>
                                                     <span class="badge badge-dark"></span>
                                             </td>

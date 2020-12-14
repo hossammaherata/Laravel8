@@ -39,9 +39,7 @@
 <body style="margin: 15px">
 
     <h2>DiMax</h2>
-       <div class="login-img">
-                <img  class="img-fluid" width="100px" height="100px" src="{{url('images/images/' . $image->imagelogin) }}" />
-                </div>
+
     @if ($data=='yes')
 <p  align="right" >كشف الفواتير من تاريخ <strong>{{$from}}</strong> حتى تاريخ <strong>{{$to}}</strong>@if($name) للمسوق<strong>{{$name}}</strong>@endif</p>
 @if($name)

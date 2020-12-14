@@ -7,7 +7,6 @@ use App\Http\Requests\OrderCreate;
 use App\Models\Bill;
 use App\Models\Order;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -25,12 +24,13 @@ class OrderController extends Controller
     {
         //
     }
-    public function hh(){
-        $bills=Bill::all();
-        dd($bills->where('name',1));
-    //   $bills=Bill::whereHas('user',function($query) use($text){
-    //         $query->where('name','like','%'.$text.'%');
-    //     })->get();
+    public function hh()
+    {
+        $bills = Bill::all();
+        dd($bills->where('name', 1));
+        //   $bills=Bill::whereHas('user',function($query) use($text){
+        //         $query->where('name','like','%'.$text.'%');
+        //     })->get();
         dd($bills->count());
 
     }
@@ -119,7 +119,7 @@ class OrderController extends Controller
 
         $bill = Bill::with(['orders' => function ($query) {
             $query->orderBy('created_at', 'desc');
-        }])->with(['user'=>function($query){
+        }])->with(['user' => function ($query) {
             $query->withTrashed();
         }])->withTrashed()->where('id', $id)->first();
         return view('cms.orders.create2', ['bill' => $bill]);
@@ -133,7 +133,7 @@ class OrderController extends Controller
         $order->count = $request->get('count');
         $order->realprice = $request->get('realprice');
         $order->payprice = $request->get('payprice');
-        $order->profitadmin=$request->get('profitadmin');
+        $order->profitadmin = $request->get('profitadmin');
         // $order->created_at = $request->get('created_at') ? $request->get('created_at') : now();
         $order->bill_id = $request->get('bill_id');
         $order->profit = 0;
@@ -146,7 +146,7 @@ class OrderController extends Controller
             $real = $bill->realprice;
             $bill->total = $request->get('payprice') * $request->get('count') + $total;
             $bill->realprice = $request->get('realprice') * $request->get('count') + $real;
-            $order->created_at=$bill->created_at;
+            $order->created_at = $bill->created_at;
             $order->save();
             $bill->save();
             SuccessError::Success('تم إضافة الصنف بنجاح');
@@ -192,19 +192,17 @@ class OrderController extends Controller
     public function update(OrderCreate2 $request, $id)
     {
 
-
         // s
         // $cheksuccess=0;
         $bill = Order::find($id)->bill;
         $allProfit = $bill->orders->where('status', 'success')->count() > 0 ? $bill->orders->sum('profit') - 30 : $bill->orders->sum('profit');
 
         $order = Order::find($id);
-        if(($order->status =='wait'|| $order->status =='cancel')&&$request->status== 'return' ){
+        if (($order->status == 'wait' || $order->status == 'cancel') && $request->status == 'return') {
 
             session()->flash('status', 'alert-danger');
             session()->flash('message', 'قبل وضع الإرجاع يجب إختيار تسليم ');
             return redirect()->back();
-
 
         }
 
@@ -223,26 +221,24 @@ class OrderController extends Controller
             $user = $order->bill->user;
             $user->profit -= $allProfit;
             $user->save();
-            $order->note=null;
+            $order->note = null;
             $order->save();
-            if($order->status=='return'){
-                            $user->profit+=$order->discount;
-                            $order->discount=0;
-                            $order->save();
-                            $user->save();
-                            // dd($user->profit);
+            if ($order->status == 'return') {
+                $user->profit += $order->discount;
+                $order->discount = 0;
+                $order->save();
+                $user->save();
+                // dd($user->profit);
 
             }
 
-
-            $user->profit += $bill->orders->sum('profit') - 30 + $order->profit ;
-            $order->discount=0;
+            $user->profit += $bill->orders->sum('profit') - 30 + $order->profit;
+            $order->discount = 0;
             $order->save;
 
             $user->save();
 
-        }
-        elseif ($order->status == 'success' && $request->get('status') == 'success') {
+        } elseif ($order->status == 'success' && $request->get('status') == 'success') {
 
             // الاصل ناجحة والقادمة نجاح
             $price = $request->get('realprice');
@@ -254,78 +250,65 @@ class OrderController extends Controller
             $user->profit = $user->profit - $orderprofit;
             $order->profit = ($pay * $count - $price * $count);
             $user->profit = $user->profit + $order->profit;
-               $order->note=null;
+            $order->note = null;
             $order->save();
 
             $user->save();
 
-        }
-
-        elseif ($order->status == 'success'  && ($request->get('status') == 'wait' || $request->get('status') == 'cancel' || $request->get('status') == 'return')) {
+        } elseif ($order->status == 'success' && ($request->get('status') == 'wait' || $request->get('status') == 'cancel' || $request->get('status') == 'return')) {
             // الأصل ناجحة والقادمة ليست نجاح
 
-
-
-         $price = $order->realprice;
+            $price = $order->realprice;
             $pay = $order->payprice;
             $count = $order->count;
 
             $order->profit = $order->profit - ($pay * $count - $price * $count);
-            $order->note=null;
+            $order->note = null;
 
             $minprofit = $order->payprice * $order->count - $order->realprice * $order->count;
             $user = $order->bill->user;
             $min = $bill->orders->where('status', 'success')->count() == 1 ? 30 : 0;
 
             $user->profit = $user->profit - $minprofit + $min;
-            if($request->get('status')=='return'&& $order->status!='return'){
-                     $order->note=$request->get('note');
-                     $order->discount=$request->get('discount');
-                     $order->profit-=$request->get('discount');
-                     $order->save();
+            if ($request->get('status') == 'return' && $order->status != 'return') {
+                $order->note = $request->get('note');
+                $order->discount = $request->get('discount');
+                $order->profit -= $request->get('discount');
+                $order->save();
 
-                $user->profit-=$request->get('discount');
+                $user->profit -= $request->get('discount');
                 $user->save();
 
-
             }
-
-
 
             $user->save();
 
+        } elseif ($order->status == 'return' && $request->get('status') == 'return') {
+
+            // dd($request->discount);
+            $user = $order->bill->user;
+            $user->profit += $order->discount;
+            $user->profit -= $request->get('discount');
+            $dis = $request->get('discount');
+            $order->profit = -1*($dis);
+            $order->note = $request->get('note');
+            $order->save();
+            $user->save();
+
+        } elseif ($order->status == 'return' && ($request->status == 'wait' || $request->status == 'cancel')) {
+
+            $user = $order->bill->user;
+            $user->profit += $order->discount;
+            $order->profit = 0;
+            $order->note = null;
+            $user->save();
+            $order->save();
+
         }
-          elseif($order->status=='return'&&$request->get('status')=='return'){
-
-             $user=   $order->bill->user;
-             $user->profit+=$order->discount;
-             $user->profit-=$request->get('discount');
-             $dis=$request->get('discount');
-            $order->profit= -($dis);
-             $order->note=$request->get('note');
-             $user->save();
-
-
-
-
-
-
-            }
-            elseif($order->status =='return' && ($request->status=='wait'|| $request->status=='cancel')){
-
-             $user=   $order->bill->user;
-            $user->profit+=$order->discount;
-            $order->profit=0;
-             $order->note=null;
-             $user->save();
-             $order->save();
-
-            }
-
 
         $order->status = $request->get('status');
 
-        $order->profitadmin=$request->get('profitadmin');
+        $order->profitadmin = $request->get('profitadmin');
         if ($request->name) {
             $order->name = $request->get('name');
 
@@ -342,7 +325,7 @@ class OrderController extends Controller
             $order->realprice = $request->get('realprice');
 
         }
-        $order->note=$request->get('note');
+        $order->note = $request->get('note');
 
         $save = $order->save();
         if ($save) {
@@ -364,15 +347,13 @@ class OrderController extends Controller
 
             // if ($bill->orders->sum('profit') >= 0) {
 
+            // $bill->orders->where('status','success')->count() < 1 ? $ss=0 :$ss = 30;
 
-                // $bill->orders->where('status','success')->count() < 1 ? $ss=0 :$ss = 30;
-
-                //   $discount=30;
-                // if(($bill->orders->where('status','wait')->count()+$bill->orders->where('status','cancel')->count())==$bill->orders->count()){
-                //     $discount=0;
-                // }
-                   $bill->profit = $bill->orders->sum('profit') ;
-
+            //   $discount=30;
+            // if(($bill->orders->where('status','wait')->count()+$bill->orders->where('status','cancel')->count())==$bill->orders->count()){
+            //     $discount=0;
+            // }
+            $bill->profit = $bill->orders->sum('profit');
 
             // }
 

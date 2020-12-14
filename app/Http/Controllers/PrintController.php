@@ -48,8 +48,8 @@ class PrintController extends Controller
         $to = Carbon::create($request->to);
         $object = $this->billindex($request);
         $bills = $object->bills;
-        $image=Images::first();
-        return view('cms.reports.bills', ['bills' => $bills, 'data' => 'yes', 'from' => $from, 'to' => $to, 'name' => null,'image'=>$image]);
+
+        return view('cms.reports.bills', ['bills' => $bills, 'data' => 'yes', 'from' => $from, 'to' => $to, 'name' => null]);
 
     }
 
@@ -61,8 +61,8 @@ class PrintController extends Controller
         $bills = $object->bills;
         $user = User::find($request->user_id);
 
-        $image=Images::first();
-        return view('cms.reports.bills', ['bills' => $bills, 'data' => 'yes', 'from' => $from, 'to' => $to, 'name' => $user->name,'image'=>$image]);
+
+        return view('cms.reports.bills', ['bills' => $bills, 'data' => 'yes', 'from' => $from, 'to' => $to, 'name' => $user->name]);
 
     }
 
@@ -74,8 +74,8 @@ class PrintController extends Controller
                 $object = $this->billindex($request);
                  $bills = $object->bills->where('user_id', Auth::id());
                 //  dd($bills->sum('profit'));
-                 $image=Images::first();
-        return view('cms.reports.user', ['bills' => $bills,  'from' => $from, 'to' => $to, 'image'=>$image ]);
+
+        return view('cms.reports.user', ['bills' => $bills,  'from' => $from, 'to' => $to ]);
 
 
 
@@ -84,7 +84,11 @@ class PrintController extends Controller
     public function indexbill()
     {
 
-        $bills = Bill::with('user', 'orders')->orderBy('created_at', 'DESC')->get();
+        $bills = Bill::with(['user'=>function($query){
+            $query->withTrashed();
+        }])->with(['orders'=>function($query){
+               $query->withTrashed();
+        }])->orderBy('created_at', 'DESC')->get();
 
         return view('cms.reports.bills', ['bills' => $bills, 'data' => 'no']);
 

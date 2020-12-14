@@ -64,13 +64,17 @@
 
                     <button type="submit" class="btn btn-primary btn-round btn-block">دخول</button>
                     <div class="mt-4">
-                        <span class="helper-text m-b-10"><i class="fa fa-lock"></i> <a href="page-forgot-password.html">نسيت كلمة السر?</a></span>
+                        <span class="helper-text m-b-10"><i class="fa fa-lock"></i> <a href="{{route('user.forgot')}}">نسيت كلمة السر?</a></span>
                         <span>يتم إنشاء حسابات المستخدمين من قِبل مسؤول الموقع</span>
                         <br>
                     <span>تواصل مع الأرقام المرفقة في الموقع</span>
 
                     </div>
                 </form>
+                 <p class="mb-1">
+
+      </p>
+
                 <div class="pattern">
                     <span class="red"></span>
                     <span class="indigo"></span>
@@ -84,7 +88,7 @@
     <div id="particles-js"></div>
 </div>
 <!-- END WRAPPER -->
-
+    {{-- <a href="">I forgot my password</a> --}}
 <script src="{{asseT('cms/html/assets/bundles/libscripts.bundle.js')}}"></script>
 <script src="{{asset('cms/html/assets/bundles/vendorscripts.bundle.js')}}"></script>
 <script src="{{asset('cms/html/assets/bundles/mainscripts.bundle.js')}}"></script>

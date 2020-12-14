@@ -184,65 +184,7 @@
                                 class="lnr lnr-menu fa fa-bars"></i></button>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle icon-menu" data-toggle="dropdown">
-                                <i class="icon-envelope"></i>
-                                <span class="notification-dot bg-green">4</span>
-                            </a>
-                            <ul class="dropdown-menu right_chat email vivify fadeIn">
-                                <li class="header green">You have 4 New eMail</li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="media">
-                                            <div class="avtar-pic w35 bg-red"><span>FC</span></div>
-                                            <div class="media-body">
-                                                <span class="name">James Wert <small class="float-right text-muted">Just
-                                                        now</small></span>
-                                                <span class="message">Update GitHub</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="media">
-                                            <div class="avtar-pic w35 bg-indigo"><span>FC</span></div>
-                                            <div class="media-body">
-                                                <span class="name">Folisise Chosielie <small
-                                                        class="float-right text-muted">12min ago</small></span>
-                                                <span class="message">New Messages</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="media">
-                                            <img class="media-object "
-                                                src="{{ asset('cms/assets/images/xs/avatar5.jpg') }}" alt="">
-                                            <div class="media-body">
-                                                <span class="name">Louis Henry <small
-                                                        class="float-right text-muted">38min ago</small></span>
-                                                <span class="message">Design bug fix</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                <a href="#">
-                                        <div class="media mb-0">
-                                            <img class="media-object "
-                                                src="{{ asset('cms/assets/images/xs/avatar2.jpg') }}" alt="">
-                                            <div class="media-body">
-                                                <span class="name">Debra Stewart <small
-                                                        class="float-right text-muted">2hr ago</small></span>
-                                                <span class="message">Fix Bug</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+
                         <li class="dropdown">
                             <a href="#" onclick="dd()" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                                 <i class="icon-bell"></i>
@@ -282,8 +224,7 @@
                 <div class="navbar-right">
                     <div id="navbar-menu">
                         <ul class="nav navbar-nav">
-                            <li><a href="javascript:void(0);" class="search_toggle icon-menu" title="Search Result"><i
-                                        class="icon-magnifier"></i></a></li>
+
                                         <li><a href="{{route('user.profile.view')}}" class=" icon-menu" title="Right Menu"><i
                                         class="icon-user"></i></a>
                             </li>
@@ -557,7 +498,7 @@
 
 
                          <li>
-                            <a href="#"  data-toggle="modal" data-target="#allbill" class="has-arrow"><i class="icon-badge"></i><span>التقويم</span></a>
+                            <a href="#"  data-toggle="modal" data-target="#allbill" class="has-arrow"><i class="icon-badge"></i><span>الأرباح</span></a>
 
                         </li>
 
@@ -595,7 +536,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">الفواتير</h4>
+                <h4 class="modal-title">الأرباح</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">

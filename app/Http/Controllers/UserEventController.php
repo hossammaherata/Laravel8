@@ -75,6 +75,14 @@ class UserEventController extends Controller
         //
     }
 
+    public function showdetails($id){
+
+        // return 10000000000000;
+        // return $id;
+        $event=Event::find($id);
+        return view('user.events._show',['event'=>$event]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

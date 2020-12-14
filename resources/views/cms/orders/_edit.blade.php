@@ -145,7 +145,7 @@
                                   <label style="font-size: 20px">الخصم</label>
 
                                   <div class="input-group">
-                                      <input type="number" id="discount"  name="discount" class="form-control"
+                                      <input type="number" id="discount" value="{{$item->discount}}"  name="discount" class="form-control"
                                           placeholder="الخصم من المسوق">
                                   </div>
                               </div>

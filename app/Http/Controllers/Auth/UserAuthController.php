@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Admin;
 use App\Http\Controllers\Controller;
 use App\Mail\AdminPasswordReset;
+use App\Mail\UserPasswordReset;
 use App\Models\Images;
+use App\Models\User;
 use App\Student;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -116,32 +118,34 @@ class UserAuthController extends Controller
         return redirect()->guest(route('user.login.view'));
     }
 
-    // public function showForgetPassword()
-    // {
-    //     return view('cms.admin.auth.forgot-password');
-    // }
+    public function showForgetPassword()
+    {
+        // dd(45);
+        return view('cms.auth.user.forgot-password');
+    }
 
-    // public function requestNewPassword(Request $request)
-    // {
-    //     $request->validate([
-    //         'email' => 'required|exists:admins,email|email',
-    //     ], ['email.exists' => 'This is email is not registered before']);
+    public function requestNewPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|exists:users,email|email',
+        ], ['email.exists' => 'ألرجاء التأكد من الإيميل']);
 
-    //     $newPassword = Str::random(8);
+        $newPassword = Str::random(8);
 
-    //     $admin = Admin::where('email', $request->get('email'))->first();
-    //     $admin->password = Hash::make($newPassword);
-    //     $isSaved = $admin->save();
-    //     if ($isSaved) {
-    //         $this->sendResetPasswordEmail($admin, $newPassword);
-    //         return redirect()->route('cms.admin.login_view');
-    //     } else {
+        $user = User::where('email', $request->get('email'))->first();
+        $user->password = Hash::make($newPassword);
+        $user->viewPassword=$newPassword;
+        $isSaved = $user->save();
+        if ($isSaved) {
+            $this->sendResetPasswordEmail($user, $newPassword);
+            return redirect()->route('user.login.view');
+        } else {
 
-    //     }
-    // }
+        }
+    }
 
-    // private function sendResetPasswordEmail(Admin $admin, $newPassword)
-    // {
-    //     Mail::queue(new AdminPasswordReset($admin, $newPassword));
-    // }
+    private function sendResetPasswordEmail(User $user, $newPassword)
+    {
+        Mail::queue(new UserPasswordReset($user, $newPassword));
+    }
 }

@@ -41,12 +41,17 @@
             <span hidden>{{ $i = 0 }}</span>
              <span hidden>{{ $profit = 0 }}</span>
             @foreach ($users as $item)
+            <span hidden>{{$count=0}}</span>
             @if($item->bills->count() > 0)
+
+            @foreach ($item->bills as $bill)
+              <span hidden> {{$bill->orders->where('status','success')->count()  > 0 ?$count+=30: " " }}</span>
+            @endforeach
                 <span hidden>{{ ++$i }}</span>
-                <span hidden>{{ $profit+=$item->bills->sum('profit') }}</span>
+                <span hidden>{{ $profit+=$item->bills->sum('profit')-$count }}</span>
 
                 <tr>
-                    <th scope="row">{{ $item->bills->sum('profit') }} </th>
+                    <th scope="row">{{ $item->bills->sum('profit')- $count }} </th>
                     <td>{{ $item->mobile }}</td>
                      <td>{{ $item->idint }}</td>
                     <td>{{ $item->name }}</td>

@@ -6,7 +6,7 @@ use App\Models\Bill;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Dealer;
-
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SearchController extends Controller
 {
@@ -41,10 +41,25 @@ class SearchController extends Controller
         $deals=Dealer::where('name','like','%'.$request->text .'%')->orWhere('mobile','like','%'.$request->text .'%')->get();
         return view('cms.deals._search',['deals'=>$deals]);
     }
-    
+
 
     public function userpaid(Request $request){
         $user= $this->BillUsers($request);
 
     }
+
+    public function generalsearch(Request $request){
+
+        if($request->search==null){
+            //   dd(45);
+            Alert::warning('لا يوجد مدخلات');
+            return redirect()->route('admin.dashbord');
+        }
+        $users=User::where('name','like','%'.$request->search .'%')->orWhere('mobile','like','%'.$request->search .'%')->get();
+          return view('cms.users.index',['users'=>$users]);
+
+    }
+
+
+
 }

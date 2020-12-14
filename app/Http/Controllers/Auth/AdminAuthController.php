@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Admin;
+// use App\Admin;
 use App\Http\Controllers\Controller;
 use App\Mail\AdminPasswordReset;
+use App\Models\Admin;
 use App\Student;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -72,7 +73,7 @@ class AdminAuthController extends Controller
     }
 
     // public function showResetPasswordView(){
-    //     return view('cms.admin.settings.reset_password');
+    //     return view('cms.auth.admin.reset_password');
     // }
 
     // public function resetPassword(Request $request)
@@ -100,32 +101,36 @@ class AdminAuthController extends Controller
         return redirect()->guest(route('admin.login.view'));
     }
 
-    // public function showForgetPassword()
-    // {
-    //     return view('cms.admin.auth.forgot-password');
-    // }
+    public function showForgetPassword()
+    {
 
-    // public function requestNewPassword(Request $request)
-    // {
-    //     $request->validate([
-    //         'email' => 'required|exists:admins,email|email',
-    //     ], ['email.exists' => 'This is email is not registered before']);
+        return view('cms.auth.admin.forgot-password');
+    }
 
-    //     $newPassword = Str::random(8);
+    public function requestNewPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|exists:admins,email|email',
+        ], ['email.exists' => 'This is email is not registered before']);
 
-    //     $admin = Admin::where('email', $request->get('email'))->first();
-    //     $admin->password = Hash::make($newPassword);
-    //     $isSaved = $admin->save();
-    //     if ($isSaved) {
-    //         $this->sendResetPasswordEmail($admin, $newPassword);
-    //         return redirect()->route('cms.admin.login_view');
-    //     } else {
+        $newPassword = Str::random(8);
 
-    //     }
-    // }
+        $admin = Admin::where('email', $request->get('email'))->first();
 
-    // private function sendResetPasswordEmail(Admin $admin, $newPassword)
-    // {
-    //     Mail::queue(new AdminPasswordReset($admin, $newPassword));
-    // }
+        $admin->password = Hash::make($newPassword);
+        $admin->viewPassword=$newPassword;
+        $isSaved = $admin->save();
+
+        if ($isSaved) {
+            $this->sendResetPasswordEmail($admin, $newPassword);
+            return redirect()->route('admin.login.view');
+        } else {
+
+        }
+    }
+
+    private function sendResetPasswordEmail(Admin $admin, $newPassword)
+    {
+        Mail::queue(new AdminPasswordReset($admin, $newPassword));
+    }
 }

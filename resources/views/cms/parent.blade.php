@@ -109,7 +109,7 @@
                                 @foreach (Auth::user()->Notifications as $item)
 
                                    <li>
-                                   <a href="{{route('user.message')}}">
+                                   <a href="{{route('event.index')}}">
                                         <div class="feeds-left bg-red"><i class="fa fa-check"></i></div>
                                         <div class="feeds-body">
                                             <h4 class="title text-danger">{{$item->data['title']}} <small
@@ -123,35 +123,9 @@
 
                             </ul>
                         </li>
-                        <li class="dropdown language-menu">
-                            <a href="javascript:void(0);" class="dropdown-toggle icon-menu" data-toggle="dropdown">
-                                <i class="fa fa-language"></i>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item pt-2 pb-2" href="#"><img
-                                        src="{{ asset('cms/assets/images/flag/us.svg') }} "
-                                        class="w20 mr-2 rounded-circle"> US English</a>
-                                <a class="dropdown-item pt-2 pb-2" href="#"><img
-                                        src="{{ asset('cms/assets/images/flag/gb.svg') }} "
-                                        class="w20 mr-2 rounded-circle"> UK English</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item pt-2 pb-2" href="#"><img
-                                        src="{{ asset('cms/assets/images/flag/russia.svg') }} "
-                                        class="w20 mr-2 rounded-circle"> Russian</a>
-                                <a class="dropdown-item pt-2 pb-2" href="#"><img
-                                        src="{{ asset('cms/assets/images/flag/arabia.svg') }} "
-                                        class="w20 mr-2 rounded-circle"> Arabic</a>
-                                <a class="dropdown-item pt-2 pb-2" href="#"><img
-                                        src="{{ asset('cms/assets/images/flag/france.svg') }} "
-                                        class="w20 mr-2 rounded-circle"> French</a>
-                            </div>
-                        </li>
-                        <li><a href="javascript:void(0);" class="megamenu_toggle icon-menu" title="Mega Menu">Mega</a>
-                        </li>
-                        <li class="p_social"><a href="page-social.html" class="social icon-menu" title="News">Social</a>
-                        </li>
-                        <li class="p_news"><a href="page-news.html" class="news icon-menu" title="News">News</a></li>
-                        <li class="p_blog"><a href="page-blog.html" class="blog icon-menu" title="Blog">Blog</a></li>
+
+
+
                     </ul>
                 </div>
 
@@ -178,11 +152,12 @@
         <div class="search_div">
             <div class="card">
                 <div class="body">
-                    <form id="navbar-search" class="navbar-form search-form">
+                    <form method="POST" action="{{route('admin.generalsearch')}}" id="navbar-search" class="navbar-form search-form">
+                        @csrf
                         <div class="input-group mb-0">
-                            <input type="text" class="form-control" placeholder="Search...">
+                            <input type="text" name="search" class="form-control" placeholder="بحث...">
                             <div class="input-group-append">
-                                <span class="input-group-text"><i class="icon-magnifier"></i></span>
+                               <button type="submit"><span class="input-group-text"><i class="icon-magnifier"></i></span></button>
                                 <a href="javascript:void(0);" class="search_toggle btn btn-danger"><i
                                         class="icon-close"></i></a>
                             </div>
@@ -190,122 +165,7 @@
                     </form>
                 </div>
             </div>
-            <span>Search Result <small class="float-right text-muted">About 90 results (0.47 seconds)</small></span>
-            <div class="table-responsive">
-                <table class="table table-hover table-custom spacing5">
-                    <tbody>
-                        <tr>
-                            <td class="w40">
-                                <span>01</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="avtar-pic w35 bg-red" data-toggle="tooltip" data-placement="top"
-                                        title="" data-original-title="Avatar Name"><span>SS</span></div>
-                                    <div class="ml-3">
-                                        <a href="page-invoices-detail.html" title="">South Shyanne</a>
-                                        <p class="mb-0">south.shyanne@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>02</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="{{ asseT('cms/assets/images/xs/avatar2.jpg') }}" data-toggle="tooltip"
-                                        data-placement="top" title="" alt="Avatar" class="w35 h35 rounded"
-                                        data-original-title="Avatar Name">
-                                    <div class="ml-3">
-                                        <a href="javascript:void(0);" title="">Zoe Baker</a>
-                                        <p class="mb-0">zoe.baker@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>03</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="avtar-pic w35 bg-indigo" data-toggle="tooltip" data-placement="top"
-                                        title="" data-original-title="Avatar Name"><span>CB</span></div>
-                                    <div class="ml-3">
-                                        <a href="javascript:void(0);" title="">Colin Brown</a>
-                                        <p class="mb-0">colinbrown@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>04</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="avtar-pic w35 bg-green" data-toggle="tooltip" data-placement="top"
-                                        title="" data-original-title="Avatar Name"><span>KG</span></div>
-                                    <div class="ml-3">
-                                        <a href="javascript:void(0);" title="">Kevin Gill</a>
-                                        <p class="mb-0">kevin.gill@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>05</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="{{ asset('cms/assets/images/xs/avatar5.jpg') }}" data-toggle="tooltip"
-                                        data-placement="top" title="" alt="Avatar" class="w35 h35 rounded"
-                                        data-original-title="Avatar Name">
-                                    <div class="ml-3">
-                                        <a href="javascript:void(0);" title="">Brandon Smith</a>
-                                        <p class="mb-0">Maria.gill@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>06</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="{{ asset('cms/assets/images/xs/avatar6.jpg') }}" data-toggle="tooltip"
-                                        data-placement="top" title="" alt="Avatar" class="w35 h35 rounded"
-                                        data-original-title="Avatar Name">
-                                    <div class="ml-3">
-                                        <a href="javascript:void(0);" title="">Kevin Baker</a>
-                                        <p class="mb-0">kevin.baker@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>07</span>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="{{ asset('cms/assets/images/xs/avatar2.jpg') }}" data-toggle="tooltip"
-                                        data-placement="top" title="" alt="Avatar" class="w35 h35 rounded"
-                                        data-original-title="Avatar Name">
-                                    <div class="ml-3">
-                                        <a href="javascript:void(0);" title="">Zoe Baker</a>
-                                        <p class="mb-0">zoe.baker@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+
         </div>
 
         <div id="megamenu" class="megamenu particles_js">
@@ -419,6 +279,12 @@
                 </div>
                 <nav id="left-sidebar-nav" class="sidebar-nav">
                     <ul id="main-menu" class="metismenu">
+                        <li class="header">واجهة الموقع</li>
+                        <li>
+                            <a href="{{ route('web.index') }}" class="has-arrow"><i
+                                    class="icon-home"></i><span>التحكم الخارجي</span></a>
+
+                        </li>
                         <li class="header">الرئيسة</li>
                         <li>
                             <a href="{{ route('admin.dashbord') }}" class="has-arrow"><i
